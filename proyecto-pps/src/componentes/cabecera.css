@@ -1,0 +1,15 @@
+.contenedor{
+    background-color: red;
+}
+.descripcion{
+    font-size: 0.5em;
+    color: white;
+}
+.titulo{
+    color: white;
+}
+.imagenLogo{
+    margin-top: 1vh;
+    height: 5vh;
+    width: 5vw;
+}
