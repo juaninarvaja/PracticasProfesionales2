@@ -2,6 +2,9 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Cabecera from './componentes/cabecera';
+import ClienteHome from './pages/ClienteHome';
+import TransportistaHome from './pages/TransportistaHome';
+import Login from './pages/Login';
 import {
   BrowserRouter as Router,
   Switch,
@@ -25,11 +28,14 @@ function App() {
           <Route path='/home'>
             <Home/>
           </Route>
-          <Route path='/error'>
-            
+          <Route path='/ClienteHome'>
+            <ClienteHome/>
           </Route>
-          <Route path='/detalle'>
-           
+          <Route path='/TransportistaHome'>
+           <TransportistaHome/>
+          </Route>
+          <Route path='/Login'>
+           <Login/>
           </Route>
         </Switch>
       </Router>

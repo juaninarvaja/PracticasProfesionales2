@@ -12,13 +12,13 @@ function Home() {
                 <Row>
                     <Col xs={4} > Bienvenido a NombrePagina!</Col>
                     <Col xs={4}>
-                        <Button variant="contained" color="primary" className="botonTipo">
+                        <Button variant="contained" color="primary" className="botonTipo" onClick={event =>  window.location.href='/Login'}>
                             <label className="contenidoBoton">Quiero Transportar!</label>
                         </Button>
                     </Col>
                     <Col xs={4}>
-                        <Button variant="contained" color="primary" className="botonTipo">
-                            <label className="contenidoBoton">Necesito Transporte</label>
+                        <Button variant="contained" color="primary" className="botonTipo" onClick={event =>  window.location.href='/Login'}>
+                            <label className="contenidoBoton">Necesito Transporte!</label>
                         </Button>
                     </Col>
 

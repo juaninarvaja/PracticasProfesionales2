@@ -1,10 +1,9 @@
 .botonTipo{
     width: 28vw;
     height: 10vh;
-
 }
 .contenidoBoton{
-    font-size: 1ex;
+    font-size: 2ex;
 }
 .DivHomeDescripcion{
     background-color: rgba(240, 132, 30, 0.945);
