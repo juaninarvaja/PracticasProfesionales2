@@ -15,6 +15,6 @@ export default interface PedidoCliente {
   }
    
   enum TransporteApto {
-      camion, camoineta, utilitario, vehiculoRefrigerado
+      camion, camioneta, utilitario, vehiculoRefrigerado
   }
   
