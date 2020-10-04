@@ -41,15 +41,17 @@ export default function TransportistaHome()
                 <Row>
                     <Col xs={4} > Bienvenido NombreUsuario!</Col>
                     <Col xs={4}>
-                        <Button variant="contained" color="primary" className="botonTipo" onClick={event =>  window.location.href='/'}>
+                        {/* <Button variant="contained" color="primary" className="botonTipo" onClick={event =>  window.location.href='/'}>
                             <label className="contenidoBoton">Volver al home</label>
-                        </Button>
+                        </Button> */}
                     </Col>
                 </Row>
+                <br></br>
+                <h2 >Todos estos viajes estan esperando a ser cotizados!</h2>
                 <Row>
                     <TableContainer component={Paper}>
                         <Table className={classes.table} aria-label="simple table">
-                            <TableHead>
+                            <TableHead className="cabeceraTable">
                             <TableRow>
                                 <TableCell>Usuario</TableCell>
                                 <TableCell align="right">Descripcion</TableCell>

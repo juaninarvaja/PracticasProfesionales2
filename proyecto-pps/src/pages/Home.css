@@ -1,17 +1,30 @@
 .botonTipo{
-    width: 28vw;
+    width: 25vw;
     height: 10vh;
+    max-height: 12vh;
 }
 .contenidoBoton{
-    font-size: 2ex;
+    font-size: 2vw;
+
 }
 .DivHomeDescripcion{
-    background-color: rgba(240, 132, 30, 0.945);
+    background-color: rgba(30, 103, 240, 0.945);
     border-radius: 10px;
-    box-shadow: 10px 10px 15px #999;
-    margin: 5vh;
-    padding: 2vh;
+    box-shadow: 10px 10px 15px rgb(0, 62, 233);
+    margin: 0vh;
+    padding: 1vh;
     text-align: left;
     color:rgb(236, 223, 223);
-    font-size: 1.8ex;
+    font-size: 1.5vw;
+    height: 25vh;
+    display: flex;
+}
+.Welcome{
+    font-size: 4.3vh;
+    font-size-adjust: initial;
+}
+.imagenBanner{
+    height: 35vh;
+    width: 85vw;
+    display: flex;
 }

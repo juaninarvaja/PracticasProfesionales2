@@ -1,15 +1,20 @@
 .contenedor{
-    background-color: red;
+    background-color: rgb(56, 24, 197);
 }
 .descripcion{
-    font-size: 0.5em;
+    margin-top: 1em;
+    font-size: 1.5vw;
     color: white;
 }
 .titulo{
     color: white;
+    font-size: 4vw;
 }
 .imagenLogo{
     margin-top: 1vh;
     height: 5vh;
     width: 5vw;
+}
+.rowCabecera{
+    height: 10vh;
 }

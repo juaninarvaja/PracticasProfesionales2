@@ -12,6 +12,7 @@ import {
   Link
 } from "react-router-dom";
 import Home from './pages/Home';
+import HacerPedidoCliente from './pages/HacerPedidoCliente';
 
 function App() {
   return (
@@ -36,6 +37,9 @@ function App() {
           </Route>
           <Route path='/Login'>
            <Login/>
+          </Route>
+          <Route path='/HacerPedidoCliente'>
+           <HacerPedidoCliente/>
           </Route>
         </Switch>
       </Router>

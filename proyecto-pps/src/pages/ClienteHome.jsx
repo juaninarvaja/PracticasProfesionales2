@@ -10,7 +10,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-
+import './ClienteHome.css';
 
 export default function ClienteHome() {
 
@@ -42,22 +42,23 @@ export default function ClienteHome() {
                 <Row>
                     <Col xs={4} > Bienvenido NombreUsuario!</Col>
                     <Col xs={4}>
-                        <Button variant="contained" color="primary" className="botonTipo" onClick={event =>  window.location.href='/'}>
+                        {/* <Button variant="contained" color="primary" className="botonTipo" onClick={event =>  window.location.href='/'}>
                             <label className="contenidoBoton">Volver al home</label>
-                        </Button>
+                        </Button> */}
                     </Col>
                     <Col xs={4}>
-                        <Button variant="contained" color="primary" className="botonTipo">
+                        <Button variant="contained" color="primary" className="botonTipo" onClick={event =>  window.location.href='/HacerPedidoCliente'}>
                             <label className="contenidoBoton">Hacer un pedido</label>
                         </Button>
                     </Col>
 
                 </Row>
+                <br></br>
                 <Row>
                     <TableContainer component={Paper}>
                         <Table className={classes.table} aria-label="simple table">
-                            <TableHead>
-                            <TableRow>
+                            <TableHead >
+                            <TableRow className="cabeceraTable">
                                 <TableCell>Usuario</TableCell>
                                 <TableCell align="right">Descripcion</TableCell>
                                 <TableCell align="right">Precio</TableCell>
