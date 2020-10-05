@@ -1,4 +1,3 @@
-import React from 'react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import './Home.css'
 import { Button } from '@material-ui/core';
@@ -10,72 +9,73 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import './ClienteHome.css';
+import React, {useCallback} from 'react';
+import {useHistory} from 'react-router-dom';
 
-export default function ClienteHome() {
-
+export default function CotizacionesPorTta()
+{
     const useStyles = makeStyles({
         table: {
           minWidth: 650,
         },
       });
 
-    function createData(name, calories, fat, carbs, protein) {
-        return { name, calories, fat, carbs, protein };
+    function createData(name, calories, carbs, protein, price) {
+        return { name, calories, carbs, protein, price };
       }
+
+    const history = useHistory();
+    const handleOnClick = useCallback(() => history.push('/VentanaOferta'), [history]);
       
       const rows = [
-        createData('Roberto', "Yo lo llevo pero no lo bajo", 2500, 3.5, "Imagen"),
-        createData('Juan Carlos', "Para el miercoles esta", 2100, 4.7, "Imagen"),
-        createData('Jorge', "Te lo llevo el martes", 3000, 4.2, "Imagen"),
-        createData('Gaston', "Lo llevo el jueves, lo subo y lo bajo", 2800, 5, "Imagen"),
-        createData('Pedro', "No lo subo ni lo bajo, para el lunes esta", 2000, 3.2, "Imagen"),
+        createData('Marcos', "Mueble de algarrobo medidas 4x6 largo 3x2 ancho", "En espera", "Imagen",5500),
+        createData('Ignacio', "Paquete sospechoso","En espera", "Imagen",5800),
+        createData('Juan', "Computadora de escritorio", "Otorgado", "Imagen",9000),
+        createData('Tomas', "Juego de llantas 18 pulgadas", "Finalizado", "Imagen",9500),
+        createData('Hernan', "Heladera medidas 2x0.6 largo 0.4x0.5 ancho", "En espera", "Imagen",15000),
       ];
       
     const classes = useStyles();
     
     return (
-        <div className="ClienteHome">
+        <div className="TransportistaHome">
 
             <Grid>
                 <br></br>
                 <Row>
-                    <Col xs={4} > Bienvenido NombreUsuario!</Col>
-                    <Col xs={4}>
-                        {/* <Button variant="contained" color="primary" className="botonTipo" onClick={event =>  window.location.href='/'}>
-                            <label className="contenidoBoton">Volver al home</label>
+                    <Col  xs={5} xl={4} md={4}  > Bienvenido NombreUsuario!</Col>
+                    <Col  xs={2} xl={4} md={4}  ></Col>
+                    <Col  xs={5} xl={4} md={4} >
+                        {/* <Button variant="contained" color="primary" className="botonTipo" onClick={event =>  window.location.href='/CotizacionesPorTta'}>
+                            <label className="contenidoBoton">Ver Mis Cotizaciones</label>
                         </Button> */}
                     </Col>
-                    <Col xs={4}>
-                        <Button variant="contained" color="primary" className="botonTipo" onClick={event =>  window.location.href='/HacerPedidoCliente'}>
-                            <label className="contenidoBoton">Hacer un pedido</label>
-                        </Button>
-                    </Col>
-
                 </Row>
                 <br></br>
+                <h2 >Este es el estado de tus Cotizaciones, buena suerte!</h2>
                 <Row>
                     <TableContainer component={Paper}>
                         <Table className={classes.table} aria-label="simple table">
-                            <TableHead >
-                            <TableRow className="cabeceraTable">
-                                <TableCell>Usuario</TableCell>
+                            <TableHead className="cabeceraTable">
+                            <TableRow>
+                                <TableCell>Cliente</TableCell>
                                 <TableCell align="right">Descripcion</TableCell>
-                                <TableCell align="right">Precio</TableCell>
-                                <TableCell align="right">Puntuacion</TableCell>
+                                <TableCell align="right">ESTADO</TableCell>
                                 <TableCell align="right">Foto</TableCell>
+                                <TableCell align="right">Precio pasado</TableCell>
                             </TableRow>
                             </TableHead>
                             <TableBody>
                             {rows.map((row) => (
-                                <TableRow key={row.name} onClick={event =>  window.location.href='/ConfirmarCotizacion'} >
+                                // <TableRow onClick={handleOnClick} key={row.name}>
+                             <TableRow>
                                 <TableCell component="th" scope="row">
                                     {row.name}
                                 </TableCell>
                                 <TableCell align="right">{row.calories}</TableCell>
-                                <TableCell align="right">${row.fat}</TableCell>
                                 <TableCell align="right">{row.carbs}</TableCell>
                                 <TableCell align="right">{row.protein}</TableCell>
+                                <TableCell align="right">{row.price}</TableCell>
                                 </TableRow>
                             ))}
                             </TableBody>
@@ -83,7 +83,6 @@ export default function ClienteHome() {
                     </TableContainer>
                 </Row>
             </Grid>
-
         </div>
     );
 }

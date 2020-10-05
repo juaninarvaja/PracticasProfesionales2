@@ -1,3 +1,8 @@
 .cabeceraTable{
     background-color: rgb(34, 103, 233);
 }
+.divPopUp{
+    background-color: red;
+    width: 20vw;
+    height: 20vh;
+}

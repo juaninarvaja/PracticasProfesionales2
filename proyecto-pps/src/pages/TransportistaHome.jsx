@@ -43,11 +43,12 @@ export default function TransportistaHome()
             <Grid>
                 <br></br>
                 <Row>
-                    <Col xs={4} > Bienvenido NombreUsuario!</Col>
-                    <Col xs={4}>
-                        {/* <Button variant="contained" color="primary" className="botonTipo" onClick={event =>  window.location.href='/'}>
-                            <label className="contenidoBoton">Volver al home</label>
-                        </Button> */}
+                    <Col  xs={5} xl={4} md={4}  > Bienvenido NombreUsuario!</Col>
+                    <Col  xs={2} xl={4} md={4}  ></Col>
+                    <Col  xs={5} xl={4} md={4} >
+                        <Button variant="contained" color="primary" className="botonTipo" onClick={event =>  window.location.href='/CotizacionesPorTta'}>
+                            <label className="contenidoBoton">Ver Mis Cotizaciones</label>
+                        </Button>
                     </Col>
                 </Row>
                 <br></br>

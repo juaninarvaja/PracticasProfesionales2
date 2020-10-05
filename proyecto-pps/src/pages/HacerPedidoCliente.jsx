@@ -53,7 +53,7 @@ export default function HacerPedidoCliente()
                     <label className="labelInputs">Transporte apto p/llevar</label><input align='right' type="text"></input><br/>
                     <label className="labelInputs">Medidas</label>  <input align='right' type="select"></input><br/>
                     <label className="labelInputs">Descripcion del pedido</label>  
-                    <br/><input align='right' type="select"  style={{height:'10vh', width:'40vw'}}>
+                    <br/><input align='right' type="select"  style={{height:'10vh', width:'80%'}}>
                         </input><br/><br/>
                         <Button variant="contained" color="primary" className="botonAceptar" onClick={event => window.location.href = '/ClienteHome'}>
                             <label className="contenidoBotonCancelarAceptar">Cargar Pedido</label>
