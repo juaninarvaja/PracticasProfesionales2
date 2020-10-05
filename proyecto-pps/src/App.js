@@ -5,6 +5,7 @@ import Cabecera from './componentes/cabecera';
 import ClienteHome from './pages/ClienteHome';
 import TransportistaHome from './pages/TransportistaHome';
 import Login from './pages/Login';
+import VentanaOferta from './pages/VentanaOferta';
 import {
   BrowserRouter as Router,
   Switch,
@@ -13,6 +14,8 @@ import {
 } from "react-router-dom";
 import Home from './pages/Home';
 import HacerPedidoCliente from './pages/HacerPedidoCliente';
+import AdministradorHome from './pages/AdministradorHome';
+import Registro from './pages/Registro';
 
 function App() {
   return (
@@ -40,6 +43,15 @@ function App() {
           </Route>
           <Route path='/HacerPedidoCliente'>
            <HacerPedidoCliente/>
+          </Route>
+          <Route path='/VentanaOferta'>
+           <VentanaOferta/>
+          </Route>
+          <Route path='/AdministradorHome'>
+           <AdministradorHome/>
+          </Route>
+          <Route path='/Registro'>
+           <Registro/>
           </Route>
         </Switch>
       </Router>

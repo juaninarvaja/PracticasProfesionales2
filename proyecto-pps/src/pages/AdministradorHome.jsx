@@ -1,3 +1,4 @@
+import React from 'react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import './Home.css'
 import { Button } from '@material-ui/core';
@@ -9,36 +10,32 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import React, {useCallback} from 'react';
-import {useHistory} from 'react-router-dom';
+import './ClienteHome.css';
 
-export default function TransportistaHome()
-{
+export default function AdministradorHome() {
+
     const useStyles = makeStyles({
         table: {
           minWidth: 650,
         },
       });
 
-    function createData(name, calories, carbs, protein) {
-        return { name, calories, carbs, protein };
+    function createData(name, calories, fat, carbs, protein) {
+        return { name, calories, fat, carbs, protein };
       }
-
-    const history = useHistory();
-    const handleOnClick = useCallback(() => history.push('/VentanaOferta'), [history]);
       
       const rows = [
-        createData('Marcos', "Mueble de algarrobo medidas 4x6 largo 3x2 ancho", 4, "Imagen"),
-        createData('Ignacio', "Paquete sospechoso", 1.7, "Imagen"),
-        createData('Juan', "Computadora de escritorio", 2.9, "Imagen"),
-        createData('Tomas', "Juego de llantas 18 pulgadas", 5, "Imagen"),
-        createData('Hernan', "Heladera medidas 2x0.6 largo 0.4x0.5 ancho", 3.2, "Imagen"),
+        createData('Roberto@gmail.com', "Archivo", 2500, 3.5, "Imagen"),
+        createData('marquitos22@aol.com', "Archivo", 2100, 4.7, "Imagen"),
+        createData('Pedromanzotti@gmail.com', "Archivo", 3000, 4.2, "Imagen"),
+        createData('gastonsitoatr@hotmail.com', "Archivo", 2800, 5, "Imagen"),
+        createData('incontratable@gmail.com', "Archivo", 2000, 3.2, "Imagen"),
       ];
       
     const classes = useStyles();
     
     return (
-        <div className="TransportistaHome">
+        <div className="ClienteHome">
 
             <Grid>
                 <br></br>
@@ -49,29 +46,29 @@ export default function TransportistaHome()
                             <label className="contenidoBoton">Volver al home</label>
                         </Button> */}
                     </Col>
+                   
+
                 </Row>
                 <br></br>
-                <h2 >Todos estos viajes estan esperando a ser cotizados!</h2>
                 <Row>
                     <TableContainer component={Paper}>
                         <Table className={classes.table} aria-label="simple table">
-                            <TableHead className="cabeceraTable">
-                            <TableRow>
-                                <TableCell>Usuario</TableCell>
-                                <TableCell align="right">Descripcion</TableCell>
-                                <TableCell align="right">Puntuacion</TableCell>
-                                <TableCell align="right">Foto</TableCell>
+                            <TableHead >
+                            <TableRow className="cabeceraTable">
+                                <TableCell>Email</TableCell>
+                                <TableCell align="right">Documento</TableCell>
+                                <TableCell align="right">Acciones</TableCell>
                             </TableRow>
                             </TableHead>
                             <TableBody>
                             {rows.map((row) => (
-                                <TableRow onClick={handleOnClick} key={row.name}>
+                                <TableRow key={row.name}>
                                 <TableCell component="th" scope="row">
                                     {row.name}
                                 </TableCell>
                                 <TableCell align="right">{row.calories}</TableCell>
-                                <TableCell align="right">{row.carbs}</TableCell>
-                                <TableCell align="right">{row.protein}</TableCell>
+                                <TableCell align="right"><Button  variant="contained" color="primary">Aceptar</Button>
+                                <Button variant="contained" color="secondary">Cancelar</Button></TableCell>
                                 </TableRow>
                             ))}
                             </TableBody>

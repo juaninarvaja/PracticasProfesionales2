@@ -31,15 +31,25 @@
 }
 .botonAceptar{
     width: 10vw;
-    height: 5vh;
+    height: 6vh;
     max-height: 12vh;
     margin: 10px;
 }
 .botonCancelar{
     width: 10vw;
-    height: 5vh;
+    height: 6vh;
     max-height: 12vh;
 }
 .contenidoBotonCancelarAceptar{
     font-size: 1em;
+}
+.centrarCol
+{
+    float: none;
+    margin: 0 auto;
+}
+.labelOferta{
+    margin-left: 0px;
+    padding-left: 0px;
+    text-shadow: 2px 2px #000000;
 }

@@ -5,18 +5,12 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
-
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -39,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function Login() {
+export default function Registro() {
     const classes = useStyles();
   
     return (
@@ -47,7 +41,7 @@ export default function Login() {
         <CssBaseline />
         <div className={classes.paper}>
           <Typography component="h1" variant="h5">
-            Login
+            Registrarse
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
@@ -79,45 +73,30 @@ export default function Login() {
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Cliente"
-            />
-
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Administrador"
-            />
+            /> <br></br>
 
             <Button
-              fullWidth
+              variant="contained"
+              color="secondary"
+              className={classes.submit}
+              onClick={event =>  window.location.href='/'}
+            >
+              Cancelar
+            </Button>
+
+
+            <Button
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={event =>  window.location.href='/TransportistaHome'}
+              onClick={event =>  window.location.href='/'}
             >
-              LogIn Transportista
+              Registrarse
             </Button>
 
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              onClick={event =>  window.location.href='/ClienteHome'}
-            >
-              LogIn Cliente
-            </Button>
 
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              onClick={event =>  window.location.href='/AdministradorHome'}
-            >
-              LogIn Administrador
-            </Button>
+
           </form>
-
-          <label>No tenes cuenta, registrate <Link to="/Registro">aca</Link></label>
         </div>
         <Box mt={8}>
         </Box>
