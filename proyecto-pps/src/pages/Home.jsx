@@ -31,7 +31,7 @@ function Home() {
                 <Row>
                     <br></br>
                     <div className="DivHomeDescripcion">
-                        <br></br>
+                        
                        Somos una solucion de logistica innovadora, garantizando
                         el precio mas competitivo para tus necesidades en caso
                          de que necesites un transporte.
@@ -39,9 +39,26 @@ function Home() {
                     Tambien facilitamos la salida laboral de cualquier persona con un vehiculo apto para transportar
                     diferentes tipos de mercaderia, en esta paltaforma podras encontrar
                     diferentes viajes para cotizar.
-
-
                     </div>
+
+                </Row>
+                <br></br>
+                <div >
+                        <img className="imagenBanner" src="/imagenes/banner.jpg"></img>
+                    </div>
+                    <br></br>
+                    <Row>
+                    <br></br>
+                    <div className="DivHomeDescripcion">
+                        
+                       Animate a sumarte a la nueva forma de transportar productos, todas las herramientas
+                       al alcance de tus manos.
+                    <br />
+                    <br />
+                        Tenes un vechiculo? Que estas esperando para ponerlo a generar ingresos? 
+                        La mejor opcion sin comisiones! 
+                    </div>
+                    <br /><br /><br />
 
                 </Row>
             </Grid>
