@@ -9,7 +9,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import React, {useCallback} from 'react';
+import React, {useCallback,  useEffect, useState } from 'react';
+
 import {useHistory} from 'react-router-dom';
 
 export default function TransportistaHome()
@@ -35,6 +36,41 @@ export default function TransportistaHome()
         createData('Hernan', "Heladera medidas 2x0.6 largo 0.4x0.5 ancho", 3.2, "Imagen"),
       ];
       
+      
+
+      let [UrlApiPedidos, setUrlApi] = useState(
+        "http://localhost/ApiPPS/pedidos/"
+      );
+      let [listaPedidos, setListaPedidos] = useState([]);
+
+
+    
+  useEffect(() => {
+    const solicitudNoticias = {
+      method: "GET"
+    };
+
+    fetch(UrlApiPedidos, solicitudNoticias)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (resp) {
+        console.log(resp);
+        // setListaNotif(resp[0]);
+        // setListaPedidos(resp);
+        
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+      .finally(() => {
+        // console.log(listaPedidos);
+       });
+  }, []
+  );
+
+
+
     const classes = useStyles();
     
     return (
