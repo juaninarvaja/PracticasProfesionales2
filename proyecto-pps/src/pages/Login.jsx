@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback,  useEffect, useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -10,6 +10,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import {useHistory} from 'react-router-dom';
 import {
   BrowserRouter as Router,
   Switch,
@@ -38,9 +39,109 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 export default function Login() {
     const classes = useStyles();
+
+    const usuarios = [];
+
+let [UrlApi, setUrlApi] = useState(
+  "http://localhost:8080/ApiPPS/usuarios/"
+);
+let [listaUsuarios, setListaUsuarios] = useState([]);
+let [email, setEmail] = useState("");
+let [pass, setPass] = useState("");
+
+useEffect(() => {
+const solicitudNoticias = {
+method: "GET"
+};
+
+fetch(UrlApi, solicitudNoticias)
+.then(function (response) {
+  return response.json();
+})
+.then(function (resp) {
+  console.log(resp);
+
+  Object.entries(resp).map(pedido=>
+    {
+      pedido.splice(1,1).map(ped=>
+        {
+          usuarios.push(ped);
+        });
+    });
+    console.log("Rows");
+    console.log(usuarios);
+    setListaUsuarios(usuarios);
+})
+.catch((e) => {
+  console.log(e);
+})
+.finally(() => {
+  // console.log(listaPedidos);
+ });
+}, []);
+
+function logear(email, password, pagina)
+{
+  let retorno = false;
+
+  listaUsuarios.map(user=>
+    {
+      switch(pagina)
+      {
+        case "Cliente":
+          if(user.email == email && user.contrasenia == password)
+          {
+            retorno = true;
+            break;
+          }
+          break;
+        case "Transportista":
+          if(user.email == email && user.contrasenia == password && (user.tipoUsuario == "transportista" || user.tipoUsuario == "admin"))
+          {
+            retorno = true;
+            break;
+          }
+          break;
+        case "Admin":
+          if(user.email == email && user.contrasenia == password && user.tipoUsuario == "admin")
+          {
+            retorno = true;
+            break;
+          }
+          break;
+
+      }
+    })
+
+    return retorno;
+}
+
+const history = useHistory();
+const logInTransp = (e) =>{ 
+
+  if(logear(email, pass, "Transportista"))
+  {
+    window.location.href='/TransportistaHome'
+  }
+}
+
+const logInCliente = (e)=>
+{
+  if(logear(email, pass, "Cliente"))
+  {
+    window.location.href='/ClienteHome'
+  }
+}
+
+const logInAdmin = (e)=>
+{
+  if(logear(email, pass, "Admin"))
+  {
+    window.location.href='/AdminHome'
+  }
+}
   
     return (
       <Container component="main" maxWidth="xs">
@@ -60,6 +161,8 @@ export default function Login() {
               name="email"
               autoComplete="email"
               autoFocus
+              value = {email} 
+			        onChange = {(e) => setEmail(e.target.value)}
             />
             <TextField
               variant="outlined"
@@ -71,6 +174,8 @@ export default function Login() {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={pass} 
+			        onChange={(e) => setPass(e.target.value)}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -91,7 +196,7 @@ export default function Login() {
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={event =>  window.location.href='/TransportistaHome'}
+              onClick={logInTransp}
             >
               LogIn Transportista
             </Button>
@@ -101,7 +206,7 @@ export default function Login() {
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={event =>  window.location.href='/ClienteHome'}
+              onClick={logInCliente}
             >
               LogIn Cliente
             </Button>
@@ -111,7 +216,7 @@ export default function Login() {
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={event =>  window.location.href='/AdministradorHome'}
+              onClick={logInAdmin}
             >
               LogIn Administrador
             </Button>

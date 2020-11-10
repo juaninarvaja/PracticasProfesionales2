@@ -21,25 +21,15 @@ export default function TransportistaHome()
         },
       });
 
-    function createData(name, calories, carbs, protein) {
-        return { name, calories, carbs, protein };
-      }
 
     const history = useHistory();
     const handleOnClick = useCallback(() => history.push('/VentanaOferta'), [history]);
       
-      const rows = [
-        createData('Marcos', "Mueble de algarrobo medidas 4x6 largo 3x2 ancho", 4, "Imagen"),
-        createData('Ignacio', "Paquete sospechoso", 1.7, "Imagen"),
-        createData('Juan', "Computadora de escritorio", 2.9, "Imagen"),
-        createData('Tomas', "Juego de llantas 18 pulgadas", 5, "Imagen"),
-        createData('Hernan', "Heladera medidas 2x0.6 largo 0.4x0.5 ancho", 3.2, "Imagen"),
-      ];
+      const rows = [];
       
-      
-
+    
       let [UrlApiPedidos, setUrlApi] = useState(
-        "http://localhost/ApiPPS/pedidos/"
+        "http://localhost:8080/ApiPPS/pedidos/"
       );
       let [listaPedidos, setListaPedidos] = useState([]);
 
@@ -56,9 +46,18 @@ export default function TransportistaHome()
       })
       .then(function (resp) {
         console.log(resp);
-        // setListaNotif(resp[0]);
-        // setListaPedidos(resp);
-        
+
+        Object.entries(resp).map(pedido=>
+          {
+            pedido.splice(1,1).map(ped=>
+              {
+                //Creo que aca deberia ir el traer uno
+                rows.push(ped);
+              });
+          });
+          console.log("Rows");
+          console.log(rows);
+          setListaPedidos(rows);
       })
       .catch((e) => {
         console.log(e);
@@ -68,7 +67,6 @@ export default function TransportistaHome()
        });
   }, []
   );
-
 
 
     const classes = useStyles();
@@ -95,20 +93,24 @@ export default function TransportistaHome()
                             <TableHead className="cabeceraTable">
                             <TableRow>
                                 <TableCell>Usuario</TableCell>
+                                <TableCell align="right">Origen</TableCell>
+                                <TableCell align="right">Destino</TableCell>
                                 <TableCell align="right">Descripcion</TableCell>
                                 <TableCell align="right">Puntuacion</TableCell>
                                 <TableCell align="right">Foto</TableCell>
                             </TableRow>
                             </TableHead>
                             <TableBody>
-                            {rows.map((row) => (
-                                <TableRow onClick={handleOnClick} key={row.name}>
+                            {listaPedidos.map((row) => (
+                                <TableRow onClick={handleOnClick} key={row.idPedido}>
                                 <TableCell component="th" scope="row">
-                                    {row.name}
+                                    {row.clienteInfo.email}
                                 </TableCell>
-                                <TableCell align="right">{row.calories}</TableCell>
-                                <TableCell align="right">{row.carbs}</TableCell>
-                                <TableCell align="right">{row.protein}</TableCell>
+                                <TableCell align="right">{row.DireccionOrigen.Ciudad}</TableCell>
+                                <TableCell align="right">{row.DireccionLlegada.Ciudad}</TableCell>
+                                <TableCell align="right">{row.descripcion}</TableCell>
+                                <TableCell align="right">{row.clienteInfo.calificacion}</TableCell>
+                                <TableCell align="right">{row.foto}</TableCell>
                                 </TableRow>
                             ))}
                             </TableBody>

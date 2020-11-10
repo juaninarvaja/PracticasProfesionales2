@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback,  useEffect, useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -36,6 +36,93 @@ const useStyles = makeStyles((theme) => ({
 export default function Registro() {
     const classes = useStyles();
   
+    const usuarios = [];
+
+    let [UrlApi, setUrlApi] = useState(
+      "http://localhost:8080/ApiPPS/usuarios/"
+    );
+    let [listaUsuarios, setListaUsuarios] = useState([]);
+    let [email, setEmail] = useState("");
+    let [pass, setPass] = useState("");
+    
+    useEffect(() => {
+    const solicitudNoticias = {
+    method: "GET"
+    };
+    
+    fetch(UrlApi, solicitudNoticias)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (resp) {
+      console.log(resp);
+    
+      Object.entries(resp).map(pedido=>
+        {
+          pedido.splice(1,1).map(ped=>
+            {
+              usuarios.push(ped);
+            });
+        });
+        console.log("Rows");
+        console.log(usuarios);
+        setListaUsuarios(usuarios);
+    })
+    .catch((e) => {
+      console.log(e);
+    })
+    .finally(() => {
+      // console.log(listaPedidos);
+     });
+    }, []);
+    
+    function validar(email, password)
+    {
+      let retorno = true;
+
+      listaUsuarios.map(user=>
+      {
+        if(user.email == email)
+        {
+            retorno = false;
+        }
+      });
+
+      return retorno;
+    }
+
+    const registrar = (e)=>
+    {
+      if(validar(email, pass))
+      {
+
+        let usuario=
+        {
+          tipoUsuario: "cliente",
+          email: email,
+          contrasenia: pass
+        }
+
+        console.log(UrlApi);
+
+        fetch(UrlApi,{
+          method: "POST",
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json'},
+          body: JSON.stringify(usuario)
+          })
+          .then(response=> {
+            //window.location.href='/ClienteHome';
+            return response.text();
+          })
+          .then(function (resp) {
+            console.log(resp);
+          })
+          .catch((e) => {
+            console.log(e);
+          })
+      }
+    }
+
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -54,6 +141,8 @@ export default function Registro() {
               name="email"
               autoComplete="email"
               autoFocus
+              value = {email} 
+			        onChange = {(e) => setEmail(e.target.value)}
             />
             <TextField
               variant="outlined"
@@ -65,6 +154,8 @@ export default function Registro() {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={pass} 
+			        onChange={(e) => setPass(e.target.value)}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -89,7 +180,7 @@ export default function Registro() {
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={event =>  window.location.href='/'}
+              onClick={registrar}
             >
               Registrarse
             </Button>
