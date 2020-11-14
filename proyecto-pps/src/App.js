@@ -18,7 +18,7 @@ import AdministradorHome from './pages/AdministradorHome';
 import Registro from './pages/Registro';
 import ConfirmarCotizacionRecibida from './pages/ConfirmarCotizacionRecibida';
 import CotizacionesPorTta from './pages/CotizacionesPorTta';
-
+import CotizacionesPedido from './pages/CotizacionesPedido';
 
 function App() {
   return (
@@ -35,19 +35,19 @@ function App() {
           <Route path='/home'>
             <Home/>
           </Route>
-          <Route path='/ClienteHome'>
+          <Route path='/ClienteHome/:email'>
             <ClienteHome/>
           </Route>
-          <Route path='/TransportistaHome'>
+          <Route path='/TransportistaHome/:email'>
            <TransportistaHome/>
           </Route>
           <Route path='/Login'>
            <Login/>
           </Route>
-          <Route path='/HacerPedidoCliente'>
+          <Route path='/HacerPedidoCliente/:id'>
            <HacerPedidoCliente/>
           </Route>
-          <Route path='/VentanaOferta'>
+          <Route path='/VentanaOferta/:idTransp/:idPedido'>
            <VentanaOferta/>
           </Route>
           <Route path='/AdministradorHome'>
@@ -55,6 +55,9 @@ function App() {
           </Route>
           <Route path='/Registro'>
            <Registro/>
+          </Route>
+          <Route path='/CotizacionesPedido/:id'>
+           <CotizacionesPedido/>
           </Route>
           <Route path='/ConfirmarCotizacion'>
             <ConfirmarCotizacionRecibida/>

@@ -123,7 +123,7 @@ const logInTransp = (e) =>{
 
   if(logear(email, pass, "Transportista"))
   {
-    window.location.href='/TransportistaHome'
+    window.location.href='/TransportistaHome/' + email ;
   }
 }
 
@@ -131,7 +131,7 @@ const logInCliente = (e)=>
 {
   if(logear(email, pass, "Cliente"))
   {
-    window.location.href='/ClienteHome'
+    window.location.href='/ClienteHome/' + email;
   }
 }
 
@@ -139,7 +139,7 @@ const logInAdmin = (e)=>
 {
   if(logear(email, pass, "Admin"))
   {
-    window.location.href='/AdminHome'
+    window.location.href='/AdminHome';
   }
 }
   

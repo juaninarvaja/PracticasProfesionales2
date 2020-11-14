@@ -93,6 +93,8 @@ export default function Registro() {
 
     const registrar = (e)=>
     {
+      e.preventDefault();
+
       if(validar(email, pass))
       {
 
@@ -103,18 +105,19 @@ export default function Registro() {
           contrasenia: pass
         }
 
-        console.log(UrlApi);
+        const formBody = Object.keys(usuario).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(usuario[key])).join('&');
 
         fetch(UrlApi,{
           method: "POST",
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json'},
-          body: JSON.stringify(usuario)
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'},
+          body: formBody,
           })
           .then(response=> {
-            //window.location.href='/ClienteHome';
-            return response.text();
+            
+            return response.json();
           })
           .then(function (resp) {
+            window.location.href='/ClienteHome';
             console.log(resp);
           })
           .catch((e) => {

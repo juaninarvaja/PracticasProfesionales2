@@ -10,11 +10,14 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import React, {useCallback,  useEffect, useState } from 'react';
+import { useParams  } from 'react-router-dom';
 
 import {useHistory} from 'react-router-dom';
 
 export default function TransportistaHome()
 {
+    let { email } = useParams(); 
+
     const useStyles = makeStyles({
         table: {
           minWidth: 650,
@@ -27,7 +30,7 @@ export default function TransportistaHome()
       
       const rows = [];
       
-    
+      let [idTransp, setIdTransp] = useState(-1);
       let [UrlApiPedidos, setUrlApi] = useState(
         "http://localhost:8080/ApiPPS/pedidos/"
       );
@@ -65,6 +68,36 @@ export default function TransportistaHome()
       .finally(() => {
         // console.log(listaPedidos);
        });
+
+       let mail=
+        {
+          mail: email
+        }
+
+    const formBody = Object.keys(mail).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(mail[key])).join('&');
+
+    const solicitud = {
+      method: "POST",
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'},
+      body: formBody,
+    };
+
+    fetch("http://localhost:8080/ApiPPS/transp/mail/", solicitud)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (resp) {
+
+        setIdTransp(resp.idTransportista);
+
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+      .finally(() => {
+        // console.log(listaPedidos);
+       });
+
   }, []
   );
 
@@ -102,7 +135,7 @@ export default function TransportistaHome()
                             </TableHead>
                             <TableBody>
                             {listaPedidos.map((row) => (
-                                <TableRow onClick={handleOnClick} key={row.idPedido}>
+                                <TableRow onClick={event => window.location.href = '/VentanaOferta/'+idTransp+"/"+row.idPedido} key={row.idPedido}>
                                 <TableCell component="th" scope="row">
                                     {row.clienteInfo.email}
                                 </TableCell>

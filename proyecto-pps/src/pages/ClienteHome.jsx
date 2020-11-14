@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useCallback,  useEffect, useState } from 'react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
+import { useParams  } from 'react-router-dom';
 import './Home.css'
 import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -14,23 +15,84 @@ import './ClienteHome.css';
 
 export default function ClienteHome() {
 
+    let { email } = useParams(); 
+
     const useStyles = makeStyles({
         table: {
           minWidth: 650,
         },
       });
 
-    function createData(name, calories, fat, carbs, protein) {
-        return { name, calories, fat, carbs, protein };
-      }
+      const rows = [];
       
-      const rows = [
-        createData('Roberto', "Yo lo llevo pero no lo bajo", 2500, 3.5, "Imagen"),
-        createData('Juan Carlos', "Para el miercoles esta", 2100, 4.7, "Imagen"),
-        createData('Jorge', "Te lo llevo el martes", 3000, 4.2, "Imagen"),
-        createData('Gaston', "Lo llevo el jueves, lo subo y lo bajo", 2800, 5, "Imagen"),
-        createData('Pedro', "No lo subo ni lo bajo, para el lunes esta", 2000, 3.2, "Imagen"),
-      ];
+      let [idCliente, setIdCliente] = useState(-1);
+      let [UrlApiPedidos, setUrlApi] = useState(
+        "http://localhost:8080/ApiPPS/cliente/pedidos/"
+      );
+      let [listaPedidos, setListaPedidos] = useState([]);
+      
+      const handleOnClick = (e) => {
+      console.log(e.target.value);
+      };
+      //history.push('/VentanaOferta'), [history]);
+
+    
+  useEffect(() => {
+
+    let mail=
+        {
+          mail: email
+        }
+
+    const formBody = Object.keys(mail).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(mail[key])).join('&');
+
+    const solicitudNoticias = {
+      method: "POST",
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'},
+      body: formBody,
+    };
+
+    fetch(UrlApiPedidos, solicitudNoticias)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (resp) {
+
+        console.log("resp");
+        console.log(resp);
+        setIdCliente(resp.id);
+
+        Object.entries(resp.pedidosCliente).map(pedido=>
+          {
+            pedido.splice(1,1).map(ped=>
+              {
+                rows.push(ped);
+              });
+          });
+          console.log("Rows");
+          console.log(rows);
+          setListaPedidos(rows);
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+      .finally(() => {
+        // console.log(listaPedidos);
+       });
+
+  }, []
+  );
+
+  const irAltaPedido = (e)=>
+  {
+    window.location.href='/HacerPedidoCliente/' + idCliente;
+  }
+
+  const irCotizacionesPedido = (e)=>
+  {
+    window.location.href='/HacerPedidoCliente/' + idCliente;
+  }
+
       
     const classes = useStyles();
     
@@ -40,14 +102,14 @@ export default function ClienteHome() {
             <Grid>
                 <br></br>
                 <Row>
-                    <Col xs={4} > Bienvenido NombreUsuario!</Col>
+    <Col xs={4} > Bienvenido {email}!</Col>
                     <Col xs={4}>
                         {/* <Button variant="contained" color="primary" className="botonTipo" onClick={event =>  window.location.href='/'}>
                             <label className="contenidoBoton">Volver al home</label>
                         </Button> */}
                     </Col>
                     <Col xs={4}>
-                        <Button variant="contained" color="primary" className="botonTipo" onClick={event =>  window.location.href='/HacerPedidoCliente'}>
+                        <Button variant="contained" color="primary" className="botonTipo" onClick={irAltaPedido}>
                             <label className="contenidoBoton">Hacer un pedido</label>
                         </Button>
                     </Col>
@@ -59,23 +121,19 @@ export default function ClienteHome() {
                         <Table className={classes.table} aria-label="simple table">
                             <TableHead >
                             <TableRow className="cabeceraTable">
-                                <TableCell>Usuario</TableCell>
+                                <TableCell>Origen</TableCell>
+                                <TableCell align="right">Destino</TableCell>
                                 <TableCell align="right">Descripcion</TableCell>
-                                <TableCell align="right">Precio</TableCell>
-                                <TableCell align="right">Puntuacion</TableCell>
                                 <TableCell align="right">Foto</TableCell>
                             </TableRow>
                             </TableHead>
                             <TableBody>
-                            {rows.map((row) => (
-                                <TableRow key={row.name} onClick={event =>  window.location.href='/ConfirmarCotizacion'} >
-                                <TableCell component="th" scope="row">
-                                    {row.name}
-                                </TableCell>
-                                <TableCell align="right">{row.calories}</TableCell>
-                                <TableCell align="right">${row.fat}</TableCell>
-                                <TableCell align="right">{row.carbs}</TableCell>
-                                <TableCell align="right">{row.protein}</TableCell>
+                            {listaPedidos.map((row) => (
+                                <TableRow onClick={event => window.location.href = '/CotizacionesPedido/'+row.idPedido} key={row.idPedido}>
+                                <TableCell component="th" scope="row">{row.DireccionOrigenInfo.Ciudad}</TableCell>
+                                <TableCell align="right">{row.DireccionLlegadaInfo.Ciudad}</TableCell>
+                                <TableCell align="right">{row.descripcion}</TableCell>
+                                <TableCell align="right">{row.foto}</TableCell>
                                 </TableRow>
                             ))}
                             </TableBody>
