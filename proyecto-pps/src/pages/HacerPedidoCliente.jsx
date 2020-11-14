@@ -17,7 +17,7 @@ export default function HacerPedidoCliente()
     let [infoOrigen, setInfoOrigen] = useState("");
 
     let [calleDestino, setCalleDestino] = useState("");
-    let [ciudadDestino, setCiudadDestinon] = useState("");
+    let [ciudadDestino, setCiudadDestino] = useState("");
     let [departamentoDestino, setDepartamentoDestino] = useState("");
     let [provinciaDestino, setProvinciaDestino] = useState("");
     let [codigoPostalDestino, setCodigoPostalDestino] = useState("");
@@ -83,7 +83,7 @@ export default function HacerPedidoCliente()
                         <h4>Origen del producto</h4>
                         <label className="labelInputs">Provincia:</label>  <input value={provinciaOrigen} onChange = {(e) => setProvinciaOrigen(e.target.value)}  align='right' type="text"></input><br/>
                     <label className="labelInputs">Municipio:</label><input value={departamentoOrigen} onChange = {(e) => setDepartamentoOrigen(e.target.value)} align='right' type="text"></input> <br/>
-                    <label className="labelInputs">Localidad: </label> <input  type="text"></input><br/>
+                    <label className="labelInputs">Localidad: </label> <input value={ciudadOrigen} onChange = {(e) => setCiudadOrigen(e.target.value)}  type="text"></input><br/>
                     <label className="labelInputs">CP: </label> <input align='right' value={codigoPostalOrigen} onChange = {(e) => setCodigoPostalOrigen(e.target.value)} type="number" style={{width: '5vw'}}></input><br/>
                     <label className="labelInputs"> Calle:</label> <input value={calleOrigen} onChange = {(e) => setCalleOrigen(e.target.value)} type="text"></input><br/>
                     <label className="labelInputs">Altura:</label> <input value={numeracionOrigen} onChange = {(e) => setNumeracionOrigen(e.target.value)} type="number"></input><br/>
@@ -99,7 +99,7 @@ export default function HacerPedidoCliente()
                     <h4>Destino del producto</h4>
                     <label className="labelInputs">Provincia:</label>  <input value={provinciaDestino} onChange = {(e) => setProvinciaDestino(e.target.value)} align='right' type="text"></input><br/>
                     <label className="labelInputs">Municipio:</label><input value={departamentoDestino} onChange = {(e) => setDepartamentoDestino(e.target.value)} align='right' type="text"></input> <br/>
-                    <label className="labelInputs">Localidad: </label> <input type="text"></input><br/>
+                    <label className="labelInputs">Localidad: </label> <input value={ciudadDestino} onChange = {(e) => setCiudadDestino(e.target.value)} type="text"></input><br/>
                     <label className="labelInputs">CP: </label> <input value={codigoPostalDestino} onChange = {(e) => setCodigoPostalDestino(e.target.value)} align='right' type="number" style={{width: '10vw', marginRight:'0px'}}></input><br/>
                     <label className="labelInputs"> Calle:</label> <input value={calleDestino} onChange = {(e) => setCalleDestino(e.target.value)} type="text"></input><br/>
                     <label className="labelInputs">Altura:</label> <input value={numeracionDestino} onChange = {(e) => setNumeracionDestino(e.target.value)} type="number"></input><br/>
