@@ -119,7 +119,7 @@ export default function TransportistaHome()
                     </Col>
                 </Row>
                 <br></br>
-                <h2 >Todos estos viajes estan esperando a ser cotizados!</h2>
+                <h2 className="title">Todos estos viajes estan esperando a ser cotizados!</h2>
                 <Row>
                     <TableContainer component={Paper}>
                         <Table className={classes.table} aria-label="simple table">

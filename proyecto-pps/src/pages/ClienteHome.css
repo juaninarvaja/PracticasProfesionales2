@@ -6,3 +6,8 @@
     width: 20vw;
     height: 20vh;
 }
+.title{
+    text-align: center;
+    color:rgb(34, 103, 233);
+    font-size: 2em;
+}

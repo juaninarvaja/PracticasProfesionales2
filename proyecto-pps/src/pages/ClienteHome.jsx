@@ -116,7 +116,9 @@ export default function ClienteHome() {
 
                 </Row>
                 <br></br>
+                <h3 className ="title">Tus pedidos</h3>
                 <Row>
+                  
                     <TableContainer component={Paper}>
                         <Table className={classes.table} aria-label="simple table">
                             <TableHead >
@@ -129,17 +131,48 @@ export default function ClienteHome() {
                             </TableHead>
                             <TableBody>
                             {listaPedidos.map((row) => (
-                                <TableRow onClick={event => window.location.href = '/CotizacionesPedido/'+row.idPedido} key={row.idPedido}>
+                                row.estado == "POSTEADO" ?
+                                (<TableRow onClick={event => window.location.href = '/CotizacionesPedido/'+row.idPedido} key={row.idPedido}>
                                 <TableCell component="th" scope="row">{row.DireccionOrigenInfo.Ciudad}</TableCell>
                                 <TableCell align="right">{row.DireccionLlegadaInfo.Ciudad}</TableCell>
                                 <TableCell align="right">{row.descripcion}</TableCell>
                                 <TableCell align="right">{row.foto}</TableCell>
-                                </TableRow>
+                                </TableRow>) : null
+                              
                             ))}
                             </TableBody>
                         </Table>
                     </TableContainer>
                 </Row>
+                {/* <br></br>
+                <h3 className ="title">Tus Viajes</h3>
+                <Row>
+                  
+                    <TableContainer component={Paper}>
+                        <Table className={classes.table} aria-label="simple table">
+                            <TableHead >
+                            <TableRow className="cabeceraTable">
+                                <TableCell>Origen</TableCell>
+                                <TableCell align="right">Destino</TableCell>
+                                <TableCell align="right">Descripcion</TableCell>
+                                <TableCell align="right">Foto</TableCell>
+                            </TableRow>
+                            </TableHead>
+                            <TableBody>
+                            {listaPedidos.map((row) => (
+                                row.estado == "es viaje" ?
+                                (<TableRow onClick={event => window.location.href = '/CotizacionesPedido/'+row.idPedido} key={row.idPedido}>
+                                <TableCell component="th" scope="row">{row.DireccionOrigenInfo.Ciudad}</TableCell>
+                                <TableCell align="right">{row.DireccionLlegadaInfo.Ciudad}</TableCell>
+                                <TableCell align="right">{row.descripcion}</TableCell>
+                                <TableCell align="right">{row.foto}</TableCell>
+                                </TableRow>) : null
+                              
+                            ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Row> */}
             </Grid>
 
         </div>
