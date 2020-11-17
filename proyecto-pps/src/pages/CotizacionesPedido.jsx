@@ -111,7 +111,7 @@ export default function CotizacionesPedido() {
                             </TableHead>
                             <TableBody>
                             {listaCotizaciones.map((row) => (
-                                <TableRow key={row.idTransportista} onClick={event =>  window.location.href='/ConfirmarCotizacion'} >
+                                <TableRow key={row.idTransportista} onClick={event =>  window.location.href='/ConfirmarCotizacion/' + row.idPropuesta} >
                                 <TableCell component="th" scope="row">
                                     {row.infoTransp.email}
                                 </TableCell>

@@ -1,14 +1,7 @@
-import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
+import React, {useCallback,  useEffect, useState } from 'react';
+import { useParams  } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import './HacerPedidoCliente.css'
 
@@ -17,6 +10,61 @@ import './HacerPedidoCliente.css'
 
 export default function ConfirmarCotizacionRecibida() {
    
+    let { id } = useParams(); 
+
+    let [UrlApi, setUrlApi] = useState(
+        "http://localhost:8080/ApiPPS/propuesta/TraerPorId/"
+      );
+
+    let [propuesta, setPropuesta] = useState({});
+    let [infoTransp, setInfoTransp] = useState({});
+      
+
+    useEffect(() => {
+
+        let mail=
+            {
+              idPropuesta: id
+            }
+    
+        const formBody = Object.keys(mail).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(mail[key])).join('&');
+    
+        const solicitudNoticias = {
+          method: "POST",
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'},
+          body: formBody,
+        };
+    
+        fetch(UrlApi, solicitudNoticias)
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (resp) {
+    
+            console.log("resp");
+            console.log(resp);
+    
+            setPropuesta(resp);
+            setInfoTransp(resp.infoTransp);
+
+            /*Object.entries(resp).map(pedido=>
+              {
+                pedido.splice(1,1).map(ped=>
+                  {
+                    rows.push(ped);
+                  });
+              });*/
+              
+          })
+          .catch((e) => {
+            console.log(e);
+          })
+          .finally(() => {
+           });
+
+    
+      }, []
+      );
   
     return ( <>
       <h1>Detalles de oferta por su pedido</h1>
@@ -27,22 +75,22 @@ export default function ConfirmarCotizacionRecibida() {
               
               <label className="labelInputs">Transportista : </label>  
               <br/><input align='right' type="select"   
-              value={"Juan Carlos Messi"} readOnly> 
+              value={infoTransp.email} readOnly> 
               </input>
               <br/><br/>
               <label className="labelInputs">Calificacion: </label>  
               <br/><input align='right' type="select"   
-              value={"4.5"} readOnly> 
+              value={infoTransp.calificacion} readOnly> 
               </input>
               <br/><br/>
 
 
               <label className="labelInputs">Propuesta</label>  
               <br/><input align='right' type="select"  style={{height:'10vh', width:'70%'}} 
-              value={"Te lo llevo pero no me hagas laburar mucho"} readOnly> 
+              value={propuesta.informacion} readOnly> 
               </input>
               <br/><br/>
-              <label className="labelOferta">Oferta  $ </label><input type="text" value={"8500"} readonly></input><br/>   
+              <label className="labelOferta">Oferta  $ </label><input type="text" value={propuesta.Precio} readOnly></input><br/>   
                   <br/><br/>
 
                   <Button variant="contained" color="secondary" className="botonCancelar" onClick={event => window.location.href = '/ClienteHome'}>

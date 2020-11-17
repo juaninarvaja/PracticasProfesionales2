@@ -59,7 +59,7 @@ function App() {
           <Route path='/CotizacionesPedido/:id'>
            <CotizacionesPedido/>
           </Route>
-          <Route path='/ConfirmarCotizacion'>
+          <Route path='/ConfirmarCotizacion/:id'>
             <ConfirmarCotizacionRecibida/>
           </Route>
           <Route path='/CotizacionesPorTta'>
