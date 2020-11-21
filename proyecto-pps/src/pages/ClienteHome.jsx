@@ -12,6 +12,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import './ClienteHome.css';
+import TusViajes from '../componentes/tusViajes';
 
 export default function ClienteHome() {
 
@@ -130,6 +131,7 @@ export default function ClienteHome() {
                             </TableRow>
                             </TableHead>
                             <TableBody>
+                   
                             {listaPedidos.map((row) => (
                                 row.estado == "POSTEADO" ?
                                 (<TableRow onClick={event => window.location.href = '/CotizacionesPedido/'+row.idPedido} key={row.idPedido}>
@@ -144,6 +146,8 @@ export default function ClienteHome() {
                         </Table>
                     </TableContainer>
                 </Row>
+                <br></br>
+                <TusViajes pedidosCliente= {listaPedidos}/>
                 {/* <br></br>
                 <h3 className ="title">Tus Viajes</h3>
                 <Row>

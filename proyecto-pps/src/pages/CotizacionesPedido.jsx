@@ -97,6 +97,7 @@ export default function CotizacionesPedido() {
 
                 </Row>
                 <br></br>
+                <h2 className="title">Estos transportistas estan listos para ayudarte, acepta uno!</h2>
                 <Row>
                     <TableContainer component={Paper}>
                         <Table className={classes.table} aria-label="simple table">

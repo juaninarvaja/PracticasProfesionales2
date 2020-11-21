@@ -4,6 +4,7 @@ import './HacerPedidoCliente.css'
 import { Button } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
 
+
 export default function HacerPedidoCliente()
 {
     let { id } = useParams(); 
@@ -129,6 +130,7 @@ export default function HacerPedidoCliente()
                     </div>
                 </Col>
                 </Row>
+              
             </Grid>
         </div>
     );

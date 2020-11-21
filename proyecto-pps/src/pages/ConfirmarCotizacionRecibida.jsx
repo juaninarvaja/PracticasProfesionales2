@@ -18,7 +18,41 @@ export default function ConfirmarCotizacionRecibida() {
 
     let [propuesta, setPropuesta] = useState({});
     let [infoTransp, setInfoTransp] = useState({});
+    
+    const aceptarOferta = (propuesta)=>
+    {
+      console.log("hago click");
+      console.log(propuesta);
       
+      let infoViaje=
+      {
+        idPedido: propuesta.idPedido,
+        idPropuesta: propuesta.idPropuesta,
+        idTransportista : propuesta.idTransportista
+      }
+      const ViajeBody = Object.keys(infoViaje).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(infoViaje[key])).join('&');
+
+
+      fetch("http://localhost:8080/ApiPPS/viaje/", {
+        method: "POST",
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'},
+        body: ViajeBody,
+        })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (resp) {
+          console.log(resp);
+  
+          //window.location.href = '/ClienteHome';
+        })
+        .catch((e) => {
+          console.log(e);
+        })
+      // redireccionar
+    }
+  
+
 
     useEffect(() => {
 
@@ -61,10 +95,10 @@ export default function ConfirmarCotizacionRecibida() {
           })
           .finally(() => {
            });
-
-    
       }, []
       );
+
+
   
     return ( <>
       <h1>Detalles de oferta por su pedido</h1>
@@ -97,7 +131,8 @@ export default function ConfirmarCotizacionRecibida() {
                       <label className="contenidoBotonCancelarAceptar">Cancelar</label>
                   </Button>
 
-                  <Button variant="contained" color="primary" className="botonAceptar" onClick={event => window.location.href = '/ClienteHome'}>
+                  <Button variant="contained" color="primary" className="botonAceptar" onClick={event=> aceptarOferta(propuesta)}>
+                   {/* onClick={event => window.location.href = '/ClienteHome'}> */}
                       <label >Aceptar Oferta</label>
                   </Button>
                   
