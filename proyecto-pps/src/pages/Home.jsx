@@ -23,6 +23,7 @@ function Home() {
                         </Button>
                     </Col>
                 </Row>
+                <br></br>
                 
                     <div >
                         <img className="imagenBanner" src="/imagenes/flota.jpg"></img>
@@ -42,6 +43,7 @@ function Home() {
                     </div>
 
                 </Row>
+                <br></br>
                 <br></br>
                 <div >
                         <img className="imagenBanner" src="/imagenes/banner.jpg"></img>

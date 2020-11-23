@@ -75,6 +75,35 @@ export default function CotizacionesPedido() {
       }, []
       );
       
+    const cancelarPed = ()=>
+    {
+      console.log("Entra aca");
+
+      let idPed = 
+      {
+        idPedido:id
+      }
+
+      const formBodyPed = Object.keys(idPed).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(idPed[key])).join('&');
+    
+        fetch("http://localhost:8080/ApiPPS/pedidos/cancelar/", {
+          method: "POST",
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'},
+          body: formBodyPed,
+        })
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (resp) {
+    
+            console.log("resp");
+            console.log(resp);
+          })
+          .catch((e) => {
+            console.log(e);
+          })  
+    }
+
     const classes = useStyles();
     
     return (
@@ -85,9 +114,9 @@ export default function CotizacionesPedido() {
                 <Row>
                     <Col xs={4} > Bienvenido NombreUsuario!</Col>
                     <Col xs={4}>
-                        {/* <Button variant="contained" color="primary" className="botonTipo" onClick={event =>  window.location.href='/'}>
-                            <label className="contenidoBoton">Volver al home</label>
-                        </Button> */}
+                        {<Button variant="contained" color="secondary" className="botonTipo" onClick={cancelarPed}>
+                            <label className="contenidoBoton">Cancelar Pedido</label>
+                        </Button>}
                     </Col>
                     <Col xs={4}>
                         <Button variant="contained" color="primary" className="botonTipo" onClick={event =>  window.location.href='/HacerPedidoCliente'}>

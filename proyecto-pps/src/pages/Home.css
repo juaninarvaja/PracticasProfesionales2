@@ -1,6 +1,6 @@
 .botonTipo{
     width: 25vw;
-    height: 10vh;
+    height: 12vh;
     max-height: 12vh;
 }
 .contenidoBoton{
@@ -27,7 +27,7 @@
     font-size-adjust: initial;
 }
 .imagenBanner{
-    height: 35vh;
-    width: 85vw;
+    height: 45vh;
+    width: 100%;
     display: flex;
 }

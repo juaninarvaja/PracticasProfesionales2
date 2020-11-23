@@ -29,13 +29,14 @@ export default function TransportistaHome()
     const handleOnClick = useCallback(() => history.push('/VentanaOferta'), [history]);
       
       const rows = [];
+      const rowsViaj = [];
       
       let [idTransp, setIdTransp] = useState(-1);
       let [UrlApiPedidos, setUrlApi] = useState(
         "http://localhost:8080/ApiPPS/pedidos/"
       );
       let [listaPedidos, setListaPedidos] = useState([]);
-
+      let [listaViajes, setListaViajes] = useState([]);
 
     
   useEffect(() => {
@@ -43,23 +44,20 @@ export default function TransportistaHome()
       method: "GET"
     };
 
-    fetch(UrlApiPedidos, solicitudNoticias)
+    /*fetch(UrlApiPedidos, solicitudNoticias)
       .then(function (response) {
         return response.json();
       })
       .then(function (resp) {
-        console.log(resp);
 
         Object.entries(resp).map(pedido=>
           {
             pedido.splice(1,1).map(ped=>
               {
-                //Creo que aca deberia ir el traer uno
                 rows.push(ped);
               });
           });
-          console.log("Rows");
-          console.log(rows);
+          
           setListaPedidos(rows);
       })
       .catch((e) => {
@@ -96,7 +94,46 @@ export default function TransportistaHome()
       })
       .finally(() => {
         // console.log(listaPedidos);
-       });
+       });*/
+
+      let mail=
+        {
+          email: email
+        }
+
+    const formBodyV = Object.keys(mail).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(mail[key])).join('&');
+
+
+    fetch("http://localhost:8080/ApiPPS/viaje/traerPorMailTransp/", {
+      method: "POST",
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'},
+      body: formBodyV,
+    })
+       .then(function (response) {
+         return response.json();
+       })
+       .then(function (resp) {
+         Object.entries(resp).map(pedido=>
+          {
+            pedido.splice(1,1).map(ped=>
+              {
+                rowsViaj.push(ped);
+              });
+          });
+          console.log("Viajes");
+          console.log(rowsViaj);
+          setTimeout(()=>
+          {
+            setListaViajes(rowsViaj);
+         }, 5000);
+          
+       })
+       .catch((e) => {
+         console.log(e);
+       })
+       .finally(() => {
+         // console.log(listaPedidos);
+        });
 
   }, []
   );
@@ -113,7 +150,7 @@ export default function TransportistaHome()
                     <Col  xs={5} xl={4} md={4}  > Bienvenido NombreUsuario!</Col>
                     <Col  xs={2} xl={4} md={4}  ></Col>
                     <Col  xs={5} xl={4} md={4} >
-                        <Button variant="contained" color="primary" className="botonTipo" onClick={event =>  window.location.href='/CotizacionesPorTta'}>
+                        <Button variant="contained" color="primary" className="botonTipo" onClick={event =>  window.location.href='/CotizacionesPorTta/'+email}>
                             <label className="contenidoBoton">Ver Mis Cotizaciones</label>
                         </Button>
                     </Col>
@@ -135,16 +172,49 @@ export default function TransportistaHome()
                             </TableHead>
                             <TableBody>
                             {listaPedidos.map((row) => (
-                                <TableRow onClick={event => window.location.href = '/VentanaOferta/'+idTransp+"/"+row.idPedido} key={row.idPedido}>
+                                <TableRow onClick={event => console.log(row.infoPedido)} key={row.idPedido}>
                                 <TableCell component="th" scope="row">
                                     {row.clienteInfo.email}
                                 </TableCell>
                                 <TableCell align="right">{row.DireccionOrigen.Ciudad}</TableCell>
                                 <TableCell align="right">{row.DireccionLlegada.Ciudad}</TableCell>
-                                <TableCell align="right">{row.descripcion}</TableCell>
+                                <TableCell align="right">{row.infoPedido.descripcion}</TableCell>
                                 <TableCell align="right">{row.clienteInfo.calificacion}</TableCell>
                                 <TableCell align="right">{row.foto}</TableCell>
                                 </TableRow>
+                            ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Row>
+
+                
+                <h3 className ="title">Tus Viajes</h3>
+                <Row>
+                  
+                    <TableContainer component={Paper}>
+                        <Table className={classes.table} aria-label="simple table">
+                            <TableHead >
+                            <TableRow className="cabeceraTable">
+                                <TableCell>Origen</TableCell>
+                                <TableCell align="right">Destino</TableCell>
+                                <TableCell align="right">Descripcion</TableCell>
+                                <TableCell align="right">Cliente</TableCell>
+                                <TableCell align="right">Precio</TableCell>
+                                <TableCell align="right">Foto</TableCell>
+                            </TableRow>
+                            </TableHead>
+                            <TableBody>
+                            {listaViajes.map((row) => (
+                                (<TableRow /*onClick={event => window.location.href = '/CotizacionesPedido/'+row.idPedido}*/ key={row.idPedido}>
+                                <TableCell component="th" scope="row">{row.DireccionOrigen.Ciudad}</TableCell>
+                                <TableCell align="right">{row.DireccionLlegada.Ciudad}</TableCell>
+                                <TableCell align="right">{row.descripcion}</TableCell>
+                                <TableCell align="right">{row.infoCliente.email}</TableCell>
+                                <TableCell align="right">{row.infoPropuesta.Precio}</TableCell>
+                                <TableCell align="right">{"foto"}</TableCell>
+                                </TableRow>)
+                              
                             ))}
                             </TableBody>
                         </Table>

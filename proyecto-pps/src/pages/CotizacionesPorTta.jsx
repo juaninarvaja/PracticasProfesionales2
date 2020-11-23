@@ -1,5 +1,7 @@
 import { Grid, Row, Col } from 'react-flexbox-grid';
+import { useParams  } from 'react-router-dom';
 import './Home.css'
+import ReactDOM from 'react-dom' 
 import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -9,7 +11,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import React, {useCallback} from 'react';
+import React, {useCallback,  useEffect, useState } from 'react';
 import {useHistory} from 'react-router-dom';
 
 export default function CotizacionesPorTta()
@@ -20,25 +22,104 @@ export default function CotizacionesPorTta()
         },
       });
 
-    function createData(name, calories, carbs, protein, price) {
-        return { name, calories, carbs, protein, price };
-      }
-
     const history = useHistory();
     const handleOnClick = useCallback(() => history.push('/VentanaOferta'), [history]);
+
+    let { email } = useParams(); 
+
+    let [UrlApi, setUrlApi] = useState(
+        "http://localhost:8080/ApiPPS/propuesta/TraerPorEmailTransp/"
+      );
+    let [listaCotizaciones, setListaCotizaciones] = useState([]);
+
+    const rows = [];
+
+    useEffect(() => {
+
+        let mail=
+            {
+              email: email
+            }
+    
+        const formBody = Object.keys(mail).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(mail[key])).join('&');
+    
+        const solicitudNoticias = {
+          method: "POST",
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'},
+          body: formBody,
+        };
+    
+        fetch(UrlApi, solicitudNoticias)
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (resp) {
+    
+            console.log("resp");
+            console.log(resp);
+    
+            Object.entries(resp).map(pedido=>
+              {
+                pedido.splice(1,1).map(ped=>
+                  {
+                    rows.push(ped);
+                  });
+              });
+              console.log("Rows");
+              console.log(rows);
+              setListaCotizaciones(rows);
+          })
+          .catch((e) => {
+            console.log(e);
+          })
+          .finally(() => {
+            // console.log(listaPedidos);
+           });
+    
+      }, []
+      );
       
-      const rows = [
-        createData('Marcos', "Mueble de algarrobo medidas 4x6 largo 3x2 ancho", "En espera", "Imagen",5500),
-        createData('Ignacio', "Paquete sospechoso","En espera", "Imagen",5800),
-        createData('Juan', "Computadora de escritorio", "Otorgado", "Imagen",9000),
-        createData('Tomas', "Juego de llantas 18 pulgadas", "Finalizado", "Imagen",9500),
-        createData('Hernan', "Heladera medidas 2x0.6 largo 0.4x0.5 ancho", "En espera", "Imagen",15000),
-      ];
-      
+
+    const quitarCot = (idProp)=>
+    {      
+      setListaCotizaciones([]);
+      listaCotizaciones.splice(listaCotizaciones.indexOf(idProp), 1);
+
+      setTimeout(()=>
+        {
+          setListaCotizaciones(listaCotizaciones);
+        }, 500);
+
+      let idCot = 
+      {
+        idPropuesta: idProp.idPropuesta
+      }
+
+      const formBodyCot = Object.keys(idCot).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(idCot[key])).join('&');
+    
+        fetch("http://localhost:8080/ApiPPS/propuesta/cancelar/", {
+          method: "POST",
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'},
+          body: formBodyCot,
+        })
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (resp) {
+    
+            console.log("resp");
+            console.log(resp);
+
+          })
+          .catch((e) => {
+            console.log(e);
+          })
+    }
+
     const classes = useStyles();
     
     return (
-        <div className="TransportistaHome">
+        <div className="TransportistaHome" id="CotTransp">
 
             <Grid>
                 <br></br>
@@ -59,23 +140,27 @@ export default function CotizacionesPorTta()
                             <TableHead className="cabeceraTable">
                             <TableRow>
                                 <TableCell>Cliente</TableCell>
+                                <TableCell align="right">Puntuacion Cliente</TableCell>
                                 <TableCell align="right">Descripcion</TableCell>
                                 <TableCell align="right">ESTADO</TableCell>
-                                <TableCell align="right">Foto</TableCell>
-                                <TableCell align="right">Precio pasado</TableCell>
+                                <TableCell align="right">Precio Pasado</TableCell>
+                                <TableCell align="right">Quitar Cotizacion</TableCell>
                             </TableRow>
                             </TableHead>
                             <TableBody>
-                            {rows.map((row) => (
+                            {listaCotizaciones.map((row) => (
                                 // <TableRow onClick={handleOnClick} key={row.name}>
-                             <TableRow>
+                             <TableRow key={row.idPedido}>
                                 <TableCell component="th" scope="row">
-                                    {row.name}
+                                    {row.infoCliente.email}
                                 </TableCell>
-                                <TableCell align="right">{row.calories}</TableCell>
-                                <TableCell align="right">{row.carbs}</TableCell>
-                                <TableCell align="right">{row.protein}</TableCell>
-                                <TableCell align="right">{row.price}</TableCell>
+                                <TableCell align="right">{row.infoCliente.calificacion}</TableCell>
+                                <TableCell align="right">{row.infoPedido.descripcion}</TableCell>
+                                <TableCell align="right">{row.infoPedido.estado}</TableCell>
+                                <TableCell align="right">{row.Precio}</TableCell>
+                                <TableCell align="right">
+                                <Button variant="contained" onClick={e=>quitarCot(row)} color="secondary">Quitar</Button>
+                                </TableCell>
                                 </TableRow>
                             ))}
                             </TableBody>

@@ -62,7 +62,7 @@ function App() {
           <Route path='/ConfirmarCotizacion/:id'>
             <ConfirmarCotizacionRecibida/>
           </Route>
-          <Route path='/CotizacionesPorTta'>
+          <Route path='/CotizacionesPorTta/:email'>
             <CotizacionesPorTta/>
           </Route>
         </Switch>

@@ -50,6 +50,12 @@ let [UrlApi, setUrlApi] = useState(
 let [listaUsuarios, setListaUsuarios] = useState([]);
 let [email, setEmail] = useState("");
 let [pass, setPass] = useState("");
+let [check, setCheck] = useState("transp");
+
+const cambiarCheck = (cambio)=>
+{
+  setCheck(cambio);
+}
 
 useEffect(() => {
 const solicitudNoticias = {
@@ -139,7 +145,7 @@ const logInAdmin = (e)=>
 {
   if(logear(email, pass, "Admin"))
   {
-    window.location.href='/AdminHome';
+    window.location.href='/AdministradorHome';
   }
 }
   
@@ -178,19 +184,28 @@ const logInAdmin = (e)=>
 			        onChange={(e) => setPass(e.target.value)}
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={<Checkbox value="remember" 
+              checked={check==="transp"}
+              color="primary" />}
               label="Transportista"
+              onChange={(e)=>cambiarCheck("transp")}
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={<Checkbox value="remember"
+              checked={check==="cliente"}
+               color="primary" />}
               label="Cliente"
+              onChange={(e)=>cambiarCheck("cliente")}
             />
 
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={<Checkbox value="remember" 
+              checked={check==="admin"}
+              color="primary" />}
               label="Administrador"
+              onChange={(e)=>cambiarCheck("admin")}
             />
-
+            {check=="transp"&&
             <Button
               fullWidth
               variant="contained"
@@ -200,7 +215,9 @@ const logInAdmin = (e)=>
             >
               LogIn Transportista
             </Button>
+            }
 
+            {check=="cliente"&&
             <Button
               fullWidth
               variant="contained"
@@ -210,7 +227,9 @@ const logInAdmin = (e)=>
             >
               LogIn Cliente
             </Button>
+            }
 
+            {check=="admin"&&
             <Button
               fullWidth
               variant="contained"
@@ -220,6 +239,7 @@ const logInAdmin = (e)=>
             >
               LogIn Administrador
             </Button>
+            }
           </form>
 
           <label>No tenes cuenta, registrate <Link to="/Registro">aca</Link></label>

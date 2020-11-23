@@ -25,12 +25,15 @@ export default function ClienteHome() {
       });
 
       const rows = [];
+      const rowsViaj = [];
       
       let [idCliente, setIdCliente] = useState(-1);
       let [UrlApiPedidos, setUrlApi] = useState(
         "http://localhost:8080/ApiPPS/cliente/pedidos/"
       );
       let [listaPedidos, setListaPedidos] = useState([]);
+      let [listaViajes, setListaViajes] = useState([]);
+
       
       const handleOnClick = (e) => {
       console.log(e.target.value);
@@ -80,6 +83,41 @@ export default function ClienteHome() {
       .finally(() => {
         // console.log(listaPedidos);
        });
+
+       mail=
+       {
+         email: email
+       }
+
+     const formBodyV = Object.keys(mail).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(mail[key])).join('&');
+
+
+       fetch("http://localhost:8080/ApiPPS/viaje/traerPorMailCliente/", {
+      method: "POST",
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'},
+      body: formBodyV,
+    })
+       .then(function (response) {
+         return response.json();
+       })
+       .then(function (resp) {
+         console.log(resp);
+         Object.entries(resp).map(pedido=>
+          {
+            pedido.splice(1,1).map(ped=>
+              {
+                rowsViaj.push(ped);
+              });
+          });
+          console.log("Viajes");
+          setListaViajes(rowsViaj);
+       })
+       .catch((e) => {
+         console.log(e);
+       })
+       .finally(() => {
+         // console.log(listaPedidos);
+        });
 
   }, []
   );
@@ -147,8 +185,8 @@ export default function ClienteHome() {
                     </TableContainer>
                 </Row>
                 <br></br>
-                <TusViajes pedidosCliente= {listaPedidos}/>
-                {/* <br></br>
+                
+                <br></br>
                 <h3 className ="title">Tus Viajes</h3>
                 <Row>
                   
@@ -159,26 +197,29 @@ export default function ClienteHome() {
                                 <TableCell>Origen</TableCell>
                                 <TableCell align="right">Destino</TableCell>
                                 <TableCell align="right">Descripcion</TableCell>
+                                <TableCell align="right">Transportista</TableCell>
+                                <TableCell align="right">Precio</TableCell>
                                 <TableCell align="right">Foto</TableCell>
                             </TableRow>
                             </TableHead>
-                            <TableBody>
-                            {listaPedidos.map((row) => (
-                                row.estado == "es viaje" ?
+                            <TableBody> 
+                            {listaViajes.map((row) => (
                                 (<TableRow onClick={event => window.location.href = '/CotizacionesPedido/'+row.idPedido} key={row.idPedido}>
-                                <TableCell component="th" scope="row">{row.DireccionOrigenInfo.Ciudad}</TableCell>
-                                <TableCell align="right">{row.DireccionLlegadaInfo.Ciudad}</TableCell>
-                                <TableCell align="right">{row.descripcion}</TableCell>
-                                <TableCell align="right">{row.foto}</TableCell>
-                                </TableRow>) : null
+                                <TableCell component="th" scope="row">{row.DireccionOrigen.Ciudad}</TableCell>
+                                <TableCell align="right">{row.DireccionLlegada.Ciudad}</TableCell>
+                                <TableCell align="right">{row.infoPedido.descripcion}</TableCell>
+                                <TableCell align="right">{row.infoPropuesta.infoTransp.email}</TableCell>
+                                <TableCell align="right">{row.infoPropuesta.Precio}</TableCell>
+                                <TableCell align="right">{"foto"}</TableCell>
+                                </TableRow>)
                               
                             ))}
                             </TableBody>
                         </Table>
                     </TableContainer>
-                </Row> */}
+                </Row>
             </Grid>
-
+            <br></br>
         </div>
     );
 }
