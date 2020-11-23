@@ -133,7 +133,7 @@ export default function Registro() {
             return response.json();
           })
           .then(function (resp) {
-            window.location.href='/ClienteHome';
+            window.location.href='/Home';
             console.log(resp);
           })
           .catch((e) => {
@@ -192,7 +192,7 @@ export default function Registro() {
               label="Patente del vehiculo"
               id="patente"
               autoComplete="patente"
-              value={pass} 
+              value={patente} 
 			        onChange={(e) => setPatente(e.target.value)}
             />
             }
