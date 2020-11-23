@@ -124,7 +124,7 @@ export default function HacerPedidoCliente()
                         <Button variant="contained" color="primary" className="botonAceptar" onClick={subirPedido}>
                             <label className="contenidoBotonCancelarAceptar">Cargar Pedido</label>
                         </Button>
-                        <Button variant="contained" color="secondary" className="botonCancelar" onClick={event => window.location.href = '/ClienteHome'}>
+                        <Button variant="contained" color="secondary" className="botonCancelar" onClick={event => window.history.back()}>
                             <label className="contenidoBotonCancelarAceptar">Cancelar</label>
                         </Button>
                     </div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback,  useEffect, useState } from 'react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import './Home.css'
 import { Button } from '@material-ui/core';
@@ -20,18 +20,128 @@ export default function AdministradorHome() {
         },
       });
 
-    function createData(name, calories, fat, carbs, protein) {
-        return { name, calories, fat, carbs, protein };
-      }
+    let [UrlApi, setUrlApi] = useState(
+        "http://localhost:8080/ApiPPS/transp/solicitudesTransp/"
+    );
+    let [listaTransportistas, setListaTransportistas] = useState([]);
+  
+    const rows = [];
+  
+    useEffect(() => {
+  
+      const solicitudNoticias = {
+        method: "GET",
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'},
+      };
       
-      const rows = [
-        createData('Roberto@gmail.com', "Archivo", 2500, 3.5, "Imagen"),
-        createData('marquitos22@aol.com', "Archivo", 2100, 4.7, "Imagen"),
-        createData('Pedromanzotti@gmail.com', "Archivo", 3000, 4.2, "Imagen"),
-        createData('gastonsitoatr@hotmail.com', "Archivo", 2800, 5, "Imagen"),
-        createData('incontratable@gmail.com', "Archivo", 2000, 3.2, "Imagen"),
-      ];
+        fetch(UrlApi, solicitudNoticias)
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (resp) {
+  
+            console.log("resp");
+            console.log(resp);
       
+          Object.entries(resp).map(pedido=>
+            {
+              pedido.splice(1,1).map(ped=>
+                {
+                  rows.push(ped);
+                });
+            });
+            console.log("Rows");
+            console.log(rows);
+            setListaTransportistas(rows);
+        })
+        .catch((e) => {
+            console.log(e);
+        })
+        .finally(() => {
+          // console.log(listaPedidos);
+        });
+      
+    }, []
+    );
+
+    const aceptarTransp = (transp)=>
+    {
+      setListaTransportistas([]);
+      listaTransportistas.splice(listaTransportistas.indexOf(transp), 1);
+
+      setTimeout(()=>
+        {
+          setListaTransportistas(listaTransportistas);
+        }, 500);
+
+
+        let mail=
+            {
+              mail: transp.email
+            }
+    
+        const formBody = Object.keys(mail).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(mail[key])).join('&');
+
+        fetch("http://localhost:8080/ApiPPS/transp/habilitar/", {
+            method: "POST",
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'},
+            body: formBody
+          })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (resp) {
+  
+            console.log("resp");
+            console.log(resp);
+        })
+        .catch((e) => {
+            console.log(e);
+        })
+        .finally(() => {
+          // console.log(listaPedidos);
+        });
+    }
+
+    const eliminarTransp = (transp)=>
+    {
+      setListaTransportistas([]);
+      listaTransportistas.splice(listaTransportistas.indexOf(transp), 1);
+
+      setTimeout(()=>
+        {
+          setListaTransportistas(listaTransportistas);
+        }, 500);
+
+
+        let mail=
+            {
+              mail: transp.email
+            }
+    
+        const formBody = Object.keys(mail).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(mail[key])).join('&');
+
+        fetch("http://localhost:8080/ApiPPS/transp/eliminar/", {
+            method: "POST",
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'},
+            body: formBody
+          })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (resp) {
+  
+            console.log("resp");
+            console.log(resp);
+        })
+        .catch((e) => {
+            console.log(e);
+        })
+        .finally(() => {
+          // console.log(listaPedidos);
+        });
+    }
+        
     const classes = useStyles();
     
     return (
@@ -56,19 +166,19 @@ export default function AdministradorHome() {
                             <TableHead >
                             <TableRow className="cabeceraTable">
                                 <TableCell>Email</TableCell>
-                                <TableCell align="right">Documento</TableCell>
+                                <TableCell align="right">Patente automovil</TableCell>
                                 <TableCell align="right">Acciones</TableCell>
                             </TableRow>
                             </TableHead>
                             <TableBody>
-                            {rows.map((row) => (
-                                <TableRow key={row.name}>
+                            {listaTransportistas.map((row) => (
+                                <TableRow key={row.email}>
                                 <TableCell component="th" scope="row">
-                                    {row.name}
+                                    {row.email}
                                 </TableCell>
-                                <TableCell align="right">{row.calories}</TableCell>
-                                <TableCell align="right"><Button  variant="contained" color="primary">Aceptar</Button>
-                                <Button variant="contained" color="secondary">Cancelar</Button></TableCell>
+                                <TableCell align="right">{row.papeles}</TableCell>
+                                <TableCell align="right"><Button onClick={event=>aceptarTransp(row)} variant="contained" color="primary">Aceptar</Button>
+                                <Button variant="contained" onClick={event=>eliminarTransp(row)} color="secondary">Cancelar</Button></TableCell>
                                 </TableRow>
                             ))}
                             </TableBody>

@@ -44,6 +44,8 @@ export default function Registro() {
     let [listaUsuarios, setListaUsuarios] = useState([]);
     let [email, setEmail] = useState("");
     let [pass, setPass] = useState("");
+    let [patente, setPatente] = useState("");
+    let [check, setCheck] = useState("transp");
     
     useEffect(() => {
     const solicitudNoticias = {
@@ -97,12 +99,26 @@ export default function Registro() {
 
       if(validar(email, pass))
       {
+        let usuario;
 
-        let usuario=
+        if(check == "cliente")
         {
-          tipoUsuario: "cliente",
-          email: email,
-          contrasenia: pass
+          usuario=
+          {
+            tipoUsuario: "cliente",
+            email: email,
+            contrasenia: pass
+          }
+        }
+        else
+        {
+          usuario=
+          {
+            tipoUsuario: "transportista",
+            email: email,
+            contrasenia: pass,
+            papeles: patente
+          }
         }
 
         const formBody = Object.keys(usuario).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(usuario[key])).join('&');
@@ -124,6 +140,11 @@ export default function Registro() {
             console.log(e);
           })
       }
+    }
+
+    const cambiarCheck = (cambio)=>
+    {
+      setCheck(cambio);
     }
 
     return (
@@ -160,13 +181,34 @@ export default function Registro() {
               value={pass} 
 			        onChange={(e) => setPass(e.target.value)}
             />
+
+            {check==="transp" &&
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="patente"
+              label="Patente del vehiculo"
+              id="patente"
+              autoComplete="patente"
+              value={pass} 
+			        onChange={(e) => setPatente(e.target.value)}
+            />
+            }
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={<Checkbox value="remember" 
+              checked={check==="transp"}
+              color="primary" />}
               label="Transportista"
+              onChange={(e)=>cambiarCheck("transp")}
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={<Checkbox value="remember"
+              checked={check==="cliente"}
+              color="primary" />}
               label="Cliente"
+              onChange={(e)=>cambiarCheck("cliente")}
             /> <br></br>
 
             <Button

@@ -40,61 +40,6 @@ export default function TransportistaHome()
 
     
   useEffect(() => {
-    const solicitudNoticias = {
-      method: "GET"
-    };
-
-    /*fetch(UrlApiPedidos, solicitudNoticias)
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (resp) {
-
-        Object.entries(resp).map(pedido=>
-          {
-            pedido.splice(1,1).map(ped=>
-              {
-                rows.push(ped);
-              });
-          });
-          
-          setListaPedidos(rows);
-      })
-      .catch((e) => {
-        console.log(e);
-      })
-      .finally(() => {
-        // console.log(listaPedidos);
-       });
-
-       let mail=
-        {
-          mail: email
-        }
-
-    const formBody = Object.keys(mail).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(mail[key])).join('&');
-
-    const solicitud = {
-      method: "POST",
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'},
-      body: formBody,
-    };
-
-    fetch("http://localhost:8080/ApiPPS/transp/mail/", solicitud)
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (resp) {
-
-        setIdTransp(resp.idTransportista);
-
-      })
-      .catch((e) => {
-        console.log(e);
-      })
-      .finally(() => {
-        // console.log(listaPedidos);
-       });*/
 
       let mail=
         {
@@ -122,10 +67,7 @@ export default function TransportistaHome()
           });
           console.log("Viajes");
           console.log(rowsViaj);
-          setTimeout(()=>
-          {
-            setListaViajes(rowsViaj);
-         }, 5000);
+          setListaViajes(rowsViaj);
           
        })
        .catch((e) => {
@@ -134,6 +76,62 @@ export default function TransportistaHome()
        .finally(() => {
          // console.log(listaPedidos);
         });
+
+    const solicitudNoticias = {
+      method: "GET"
+    };
+
+    fetch(UrlApiPedidos, solicitudNoticias)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (resp) {
+
+        Object.entries(resp).map(pedido=>
+          {
+            pedido.splice(1,1).map(ped=>
+              {
+                rows.push(ped);
+              });
+          });
+          
+          setListaPedidos(rows);
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+      .finally(() => {
+        // console.log(listaPedidos);
+       });
+
+       mail=
+        {
+          mail: email
+        }
+
+    const formBody = Object.keys(mail).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(mail[key])).join('&');
+
+    const solicitud = {
+      method: "POST",
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'},
+      body: formBody,
+    };
+
+    fetch("http://localhost:8080/ApiPPS/transp/mail/", solicitud)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (resp) {
+
+        setIdTransp(resp.idTransportista);
+
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+      .finally(() => {
+        // console.log(listaPedidos);
+       });
 
   }, []
   );
@@ -172,13 +170,13 @@ export default function TransportistaHome()
                             </TableHead>
                             <TableBody>
                             {listaPedidos.map((row) => (
-                                <TableRow onClick={event => console.log(row.infoPedido)} key={row.idPedido}>
+                                <TableRow onClick={event => window.location.href = '/VentanaOferta/'+idTransp+"/"+row.idPedido} key={row.idPedido}>
                                 <TableCell component="th" scope="row">
                                     {row.clienteInfo.email}
                                 </TableCell>
                                 <TableCell align="right">{row.DireccionOrigen.Ciudad}</TableCell>
                                 <TableCell align="right">{row.DireccionLlegada.Ciudad}</TableCell>
-                                <TableCell align="right">{row.infoPedido.descripcion}</TableCell>
+                                <TableCell align="right">{row.descripcion}</TableCell>
                                 <TableCell align="right">{row.clienteInfo.calificacion}</TableCell>
                                 <TableCell align="right">{row.foto}</TableCell>
                                 </TableRow>
@@ -206,10 +204,10 @@ export default function TransportistaHome()
                             </TableHead>
                             <TableBody>
                             {listaViajes.map((row) => (
-                                (<TableRow /*onClick={event => window.location.href = '/CotizacionesPedido/'+row.idPedido}*/ key={row.idPedido}>
+                                (<TableRow onClick={event => window.location.href = '/AccionesViajes/'+row.idPedido} key={row.idPedido}>
                                 <TableCell component="th" scope="row">{row.DireccionOrigen.Ciudad}</TableCell>
                                 <TableCell align="right">{row.DireccionLlegada.Ciudad}</TableCell>
-                                <TableCell align="right">{row.descripcion}</TableCell>
+                                <TableCell align="right">{row.infoPedido.descripcion}</TableCell>
                                 <TableCell align="right">{row.infoCliente.email}</TableCell>
                                 <TableCell align="right">{row.infoPropuesta.Precio}</TableCell>
                                 <TableCell align="right">{"foto"}</TableCell>
@@ -221,6 +219,8 @@ export default function TransportistaHome()
                     </TableContainer>
                 </Row>
             </Grid>
+
+            <br></br>
         </div>
     );
 }

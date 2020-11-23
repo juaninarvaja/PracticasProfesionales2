@@ -193,7 +193,7 @@ const logInAdmin = (e)=>
             <FormControlLabel
               control={<Checkbox value="remember"
               checked={check==="cliente"}
-               color="primary" />}
+              color="primary" />}
               label="Cliente"
               onChange={(e)=>cambiarCheck("cliente")}
             />

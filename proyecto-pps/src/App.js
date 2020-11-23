@@ -19,6 +19,7 @@ import Registro from './pages/Registro';
 import ConfirmarCotizacionRecibida from './pages/ConfirmarCotizacionRecibida';
 import CotizacionesPorTta from './pages/CotizacionesPorTta';
 import CotizacionesPedido from './pages/CotizacionesPedido';
+import AccionesViajes from './pages/AccionesViajes';
 
 function App() {
   return (
@@ -52,6 +53,9 @@ function App() {
           </Route>
           <Route path='/AdministradorHome'>
            <AdministradorHome/>
+          </Route>
+          <Route path='/AccionesViajes/:id'>
+           <AccionesViajes/>
           </Route>
           <Route path='/Registro'>
            <Registro/>
