@@ -9,7 +9,7 @@ import { isConstructorDeclaration } from 'typescript';
 
 
 
-export default function AccionesViajes() {
+export default function AccionesViajesCliente() {
    
     let { id } = useParams(); 
 
@@ -19,11 +19,11 @@ export default function AccionesViajes() {
 
     let [viajeInfos , setViajeInfo] = useState([]);
     
-    const entregarPedido = ()=>
+    const recibirPedido = ()=>
     {
       let infoViaje=
       {
-        estado: "Entregado",
+        estado: "Recibido",
         idViaje: viajeInfos[0].idViaje
       }
       const ViajeBody = Object.keys(infoViaje).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(infoViaje[key])).join('&');
@@ -52,7 +52,7 @@ export default function AccionesViajes() {
     {
       let infoViaje=
       {
-        tipo: "transportista",
+        tipo: "cliente",
         idViaje: viajeInfos[0].idViaje
       }
       const ViajeBody = Object.keys(infoViaje).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(infoViaje[key])).join('&');
@@ -178,9 +178,9 @@ export default function AccionesViajes() {
                 {viajeInfos.map((viajeInfo) => (
                     <div key={viajeInfo.idViaje} className="divContenedorDescripcionProducto">
                     <h4>Producto/s a transportar</h4>
-                    <label className="labelInputs">Cliente</label>  <input readOnly value={viajeInfo.infoCliente.email} align='right' type="text"></input><br/>
+                    <label className="labelInputs">Transportista</label>  <input readOnly value={viajeInfo.infoPropuesta.infoTransp.email} align='right' type="text"></input><br/>
                     <label className="labelInputs">Precio</label><input readOnly value={viajeInfo.infoPropuesta.Precio} align='right' type="text"></input><br/>
-                    <label className="labelInputs">Puntuacion</label>  <input value={viajeInfo.infoCliente.calificacion} readOnly align='right' type="select"></input><br/>
+                    <label className="labelInputs">Puntuacion</label>  <input value={viajeInfo.infoPropuesta.infoTransp.calificacion} readOnly align='right' type="select"></input><br/>
                     <label className="labelInputs">Descripcion del pedido</label>  
                     <br/><input readOnly value={viajeInfo.infoPedido.descripcion} align='right' type="select"  style={{height:'10vh', width:'80%'}}>
                         </input><br/><br/>
@@ -193,15 +193,15 @@ export default function AccionesViajes() {
                       <label className="contenidoBotonCancelarAceptar">Cancelar</label>
                   </Button>
                   {viajeInfos.map((viajeInfo) => (
-                    viajeInfo.estado == "Viaje Pactado"?
-                  (<Button key={viajeInfo.idViaje} variant="contained" color="primary" className="botonAceptar" onClick={event=> entregarPedido()}>
+                    viajeInfo.estado == "Entregado"?
+                  (<Button key={viajeInfo.idViaje} variant="contained" color="primary" className="botonAceptar" onClick={event=> recibirPedido()}>
                    {/* onClick={event => window.location.href = '/ClienteHome'}> */}
-                      <label >Entregar Pedido</label>
+                      <label >Pedido Recibido</label>
                   </Button>):null
                   ))}
                   {viajeInfos.map((viajeInfo) => (
                     viajeInfo.estado == "Recibido" || viajeInfo.estado == "Calificado por cliente"?
-                  (<Button key={viajeInfo.idViaje} variant="contained" color="primary" className="botonAceptar" onClick={event=> entregarPedido()}>
+                  (<Button key={viajeInfo.idViaje} variant="contained" color="primary" className="botonAceptar" onClick={event=> console.log("llamar a puntuar")}>
                    {/* onClick={event => window.location.href = '/ClienteHome'}> */}
                       <label >Hacer encuesta</label>
                   </Button>):null

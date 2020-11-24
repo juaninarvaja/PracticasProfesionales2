@@ -20,6 +20,7 @@ import ConfirmarCotizacionRecibida from './pages/ConfirmarCotizacionRecibida';
 import CotizacionesPorTta from './pages/CotizacionesPorTta';
 import CotizacionesPedido from './pages/CotizacionesPedido';
 import AccionesViajes from './pages/AccionesViajes';
+import AccionesViajesCliente from './pages/AccionesViajesCliente';
 
 function App() {
   return (
@@ -56,6 +57,9 @@ function App() {
           </Route>
           <Route path='/AccionesViajes/:id'>
            <AccionesViajes/>
+          </Route>
+          <Route path='/AccionesViajesCliente/:id'>
+           <AccionesViajesCliente/>
           </Route>
           <Route path='/Registro'>
            <Registro/>

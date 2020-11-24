@@ -204,14 +204,15 @@ export default function ClienteHome() {
                             </TableHead>
                             <TableBody> 
                             {listaViajes.map((row) => (
-                                (<TableRow onClick={event => window.location.href = '/CotizacionesPedido/'+row.idPedido} key={row.idPedido}>
+                              row.estado == "Viaje Pactado" || row.estado == "Entregado"?
+                                (<TableRow onClick={event => window.location.href = '/AccionesViajesCliente/'+row.idPedido} key={row.idPedido}>
                                 <TableCell component="th" scope="row">{row.DireccionOrigen.Ciudad}</TableCell>
                                 <TableCell align="right">{row.DireccionLlegada.Ciudad}</TableCell>
                                 <TableCell align="right">{row.infoPedido.descripcion}</TableCell>
                                 <TableCell align="right">{row.infoPropuesta.infoTransp.email}</TableCell>
                                 <TableCell align="right">{row.infoPropuesta.Precio}</TableCell>
                                 <TableCell align="right">{"foto"}</TableCell>
-                                </TableRow>)
+                                </TableRow>):null
                               
                             ))}
                             </TableBody>
