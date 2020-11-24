@@ -38,6 +38,7 @@ export default function TransportistaHome() {
   let [listaViajes, setListaViajes] = useState([]);
   let [habilitado, setHabilitado] = useState(false);
   let [calificacion, setCalificacion] = useState(0);
+  let [strikes, setStrikes] = useState(0);
 
 
   useEffect(() => {
@@ -137,16 +138,10 @@ export default function TransportistaHome() {
         return response.json();
       })
       .then(function (resp) {
-        // console.log(email);
-        // console.log(resp[0].habilitado);
+
         if (resp[0]?.habilitado == "1") {
-         // console.log("seteo q esta hablitado");
           habilita(true);
         }
-
-        //console.log(habilitado);
-        // setIdTransp(resp.idTransportista);
-
       })
       .catch((e) => {
         console.log(e);
@@ -161,18 +156,7 @@ fetch("http://localhost:8080/ApiPPS/transp/mail/", solicitud)
   return response.json();
 })
 .then(function (resp) {
-  // console.log(email);
-  // console.log(resp[0].habilitado);
-  //console.log(resp);
   setCalificacion(resp.calificacion);
-  // if (resp[0]?.habilitado == "1") {
-  //  // console.log("seteo q esta hablitado");
-  //   habilita(true);
-  // }
-
-  //console.log(habilitado);
-  // setIdTransp(resp.idTransportista);
-
 })
 .catch((e) => {
   console.log(e);
@@ -180,6 +164,21 @@ fetch("http://localhost:8080/ApiPPS/transp/mail/", solicitud)
 .finally(() => {
   // console.log(listaPedidos);
 });
+//______________
+fetch("http://localhost:8080/ApiPPS/strikes/cantidadPorMail/", solicitud)
+.then(function (response) {
+  return response.json();
+})
+.then(function (resp) {
+  setStrikes(resp);
+})
+.catch((e) => {
+  console.log(e);
+})
+.finally(() => {
+  // console.log(listaPedidos);
+});
+      
       
 
   }, []
@@ -199,12 +198,17 @@ fetch("http://localhost:8080/ApiPPS/transp/mail/", solicitud)
             <Col xs={5} xl={4} md={4}  > Bienvenido {email} 
             <br>
             </br>
-            <h2 className="title"> tu calificacion {calificacion}</h2>
+            <h2 className="title"> Calificacion {calificacion}</h2>
+    
+           
       {/* //tu promedio en el sitio es: <h3> {calificacion}</h3> */}
             </Col>
 
 
-            <Col xs={2} xl={4} md={4}  ></Col>
+            <Col xs={2} xl={4} md={4}  ><br></br>
+            <h4 className = "strikes" > Strikes {strikes}</h4>
+            <h5>Recuerda que a los 3 strikes se te bloqueara la cuenta</h5>
+            </Col>
             <Col xs={5} xl={4} md={4} >
               <Button variant="contained" color="primary" className="botonTipo" onClick={event => window.location.href = '/CotizacionesPorTta/' + email}>
                 <label className="contenidoBoton">Ver Mis Cotizaciones</label>
