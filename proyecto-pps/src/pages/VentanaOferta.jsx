@@ -12,6 +12,15 @@ export default function VentanaOferta()
     let [informacion, setInfo] = useState("");
     let [precio, setPrecio] = useState("");
 
+
+    let [abierto, setAbierto] = useState(false);
+    let [mensaje, setMensaje] = useState("");
+  
+      const abrirModal=(mensaje)=>{
+        setAbierto(true);
+        setMensaje(mensaje);
+      }
+
     const subirPropuesta = (e)=>
     {
         let datos=
@@ -21,11 +30,14 @@ export default function VentanaOferta()
           Precio: precio,
           informacion: informacion
         }
-
-    const formBody = Object.keys(datos).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(datos[key])).join('&');
-
-        
-    fetch("http://localhost:8080/ApiPPS/propuesta/", {
+        const formBody = Object.keys(datos).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(datos[key])).join('&');
+        if(!informacion || !precio || isNaN(precio)){
+          console.log("precio",precio);
+          console.log("idPedido",idPedido);
+          abrirModal("Complete los dos campos por favor, la oferta debe ser un valor numeral");
+        }
+        else{        
+       fetch("http://localhost:8080/ApiPPS/propuesta/", {
       method: "POST",
       headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'},
       body: formBody,
@@ -37,11 +49,17 @@ export default function VentanaOferta()
         console.log(resp);
 
         //window.location.href = '/ClienteHome';
+        window.history.back();
       })
       .catch((e) => {
+        
         console.log(e);
       })
-      window.history.back();
+        }
+
+ 
+
+      
     }
 
     
@@ -70,6 +88,12 @@ export default function VentanaOferta()
                 </Col>
                 </Row>
             </Grid>
+                
+          {abierto &&    
+           <div className="cartel" onClick={event =>  setAbierto(false)} >
+            <h2>{mensaje}</h2>
+            </div> 
+         }
         </div>
     );
 }
