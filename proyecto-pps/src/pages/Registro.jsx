@@ -133,6 +133,9 @@ export default function Registro() {
           abrirModal("Completa todos los datos");
 
         }
+        else if(email.length < 5 || !email.includes('@')){
+          abrirModal("mail no valido");
+        }
         else if(pass.length < 4 || pass.length > 16) {
           abrirModal("La contraseña debe tener al menos 4 caracteres y hasta 16 ");
         }
