@@ -199,19 +199,19 @@ export default function TransportistaHome()
                                 <TableCell align="right">Descripcion</TableCell>
                                 <TableCell align="right">Cliente</TableCell>
                                 <TableCell align="right">Precio</TableCell>
-                                <TableCell align="right">Foto</TableCell>
+                                <TableCell align="right">Estado del envio</TableCell>
                             </TableRow>
                             </TableHead>
                             <TableBody>
                             {listaViajes.map((row) => (
-                              row.estado == "Viaje Pactado" || row.estado == "Entregado"?
+                              row.estado == "Viaje Pactado" || row.estado == "Entregado" || row.estado == "Calificado por Cliente" ?
                                 (<TableRow onClick={event => window.location.href = '/AccionesViajes/'+row.idPedido} key={row.idPedido}>
                                 <TableCell component="th" scope="row">{row.DireccionOrigen.Ciudad}</TableCell>
                                 <TableCell align="right">{row.DireccionLlegada.Ciudad}</TableCell>
                                 <TableCell align="right">{row.infoPedido.descripcion}</TableCell>
                                 <TableCell align="right">{row.infoCliente.email}</TableCell>
                                 <TableCell align="right">{row.infoPropuesta.Precio}</TableCell>
-                                <TableCell align="right">{"foto"}</TableCell>
+                                <TableCell align="right">{row.estado}</TableCell>
                                 </TableRow>):null
                               
                             ))}
