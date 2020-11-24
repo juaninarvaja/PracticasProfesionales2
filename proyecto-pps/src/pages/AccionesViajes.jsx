@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import './HacerPedidoCliente.css'
 import { isConstructorDeclaration } from 'typescript';
+import MensajeError from '../componentes/mensajeError';
 
 
 
@@ -18,6 +19,20 @@ export default function AccionesViajes() {
       );
 
     let [viajeInfos , setViajeInfo] = useState([]);
+    let [abiertoPun, setAbiertoPuntuacion] = useState(false);
+    let [mensajePun, setMensajePuntuacion] = useState("");
+    let [puntuacion, setPuntuacion] = useState("0");
+    let [abierto, setAbierto] = useState(false);
+    let [mensaje, setMensaje] = useState("");
+
+    const abrirModal=(mensaje)=>{
+      setAbierto(true);
+      setMensaje(mensaje);
+    }
+  
+      const abrirModalPuntuacion=()=>{
+        setAbiertoPuntuacion(true);
+      }
     
     const entregarPedido = ()=>
     {
@@ -69,12 +84,48 @@ export default function AccionesViajes() {
         .then(function (resp) {
           console.log(resp);
   
-          //window.location.href = '/ClienteHome';
+          window.history.back();
         })
         .catch((e) => {
           console.log(e);
         })
-      // redireccionar
+    }
+
+    const enviarPuntuacion = ()=>
+    {
+      if(puntuacion > 0 && puntuacion < 11)
+      {
+      let infoPuntuacion=
+      {
+        tipo: "transportista",
+        idViaje: viajeInfos[0].idViaje,
+        calificacion: puntuacion
+      }
+      const ViajeBody = Object.keys(infoPuntuacion).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(infoPuntuacion[key])).join('&');
+
+
+      fetch("http://localhost:8080/ApiPPS/calificar/", {
+        method: "POST",
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'},
+        body: ViajeBody,
+        })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (resp) {
+          console.log(resp);
+  
+          window.history.back();
+        })
+        .catch((e) => {
+          console.log(e);
+        })
+      }
+      else
+      {
+        setAbiertoPuntuacion(false);
+        abrirModal("La puntuacion debe ser entre 1 y 10");
+      }
     }
   
     const rows = [];
@@ -200,14 +251,36 @@ export default function AccionesViajes() {
                   </Button>):null
                   ))}
                   {viajeInfos.map((viajeInfo) => (
-                    viajeInfo.estado == "Recibido" || viajeInfo.estado == "Calificado por cliente"?
-                  (<Button key={viajeInfo.idViaje} variant="contained" color="primary" className="botonAceptar" onClick={event=> entregarPedido()}>
-                   {/* onClick={event => window.location.href = '/ClienteHome'}> */}
+                    viajeInfo.estado == "Recibido" || viajeInfo.estado == "Calificado por Cliente"?
+                  (<Button key={viajeInfo.idViaje} variant="contained" color="primary" className="botonAceptar" onClick={event=> abrirModalPuntuacion()}>
                       <label >Hacer encuesta</label>
                   </Button>):null
                   ))}
                   </div>
           </Row>
+
+          {abierto &&    
+           <div className="cartel" onClick={event =>  setAbierto(false)} >
+            <h2>{mensaje}</h2>
+            </div> 
+         }
+
+          {viajeInfos.map((viajeInfo) => (
+          abiertoPun&&
+           (<div className="puntuacion" key={viajeInfo.idViaje}>
+            <h4 >Cliente</h4> <input readOnly value={viajeInfo.infoCliente.email} align='right' type="text"></input><br/>
+            <h4>Puntuacion</h4> <input value={puntuacion} onChange = {(e) => setPuntuacion(e.target.value)} align='right' type="select"></input><br/>
+            <br></br>
+            <Button variant="contained" color="secondary"  onClick={event=> setAbiertoPuntuacion(false)}>
+                <label >Cancelar</label>
+            </Button>
+            <Button variant="contained" color="primary" onClick={event=> enviarPuntuacion()}>
+            <label >Enviar puntuacion</label>
+            </Button>
+            </div> 
+            )
+          ))}
+
       </Grid>
       </>)
 }

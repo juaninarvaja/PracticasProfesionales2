@@ -113,16 +113,14 @@ export default function CotizacionesPedido() {
             <Grid>
                 <br></br>
                 <Row>
-                    <Col xs={4} > Bienvenido NombreUsuario!</Col>
+                    <Col xs={4} ></Col>
                     <Col xs={4}>
-                        {<Button variant="contained" color="secondary" className="botonTipo" onClick={cancelarPed}>
-                            <label className="contenidoBoton">Cancelar Pedido</label>
-                        </Button>}
+                        
                     </Col>
                     <Col xs={4}>
-                        <Button variant="contained" color="primary" className="botonTipo" onClick={event =>  window.location.href='/HacerPedidoCliente'}>
-                            <label className="contenidoBoton">Hacer un pedido</label>
-                        </Button>
+                    {<Button variant="contained" color="secondary" className="botonTipo" onClick={cancelarPed}>
+                            <label className="contenidoBoton">Cancelar Pedido</label>
+                        </Button>}
                     </Col>
 
                 </Row>

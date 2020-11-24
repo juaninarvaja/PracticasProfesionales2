@@ -277,6 +277,7 @@ fetch("http://localhost:8080/ApiPPS/transp/mail/", solicitud)
               </Table>
             </TableContainer>
           </Row>
+          <br></br>
         </Grid>
 
       }

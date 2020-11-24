@@ -18,6 +18,21 @@ export default function AccionesViajesCliente() {
       );
 
     let [viajeInfos , setViajeInfo] = useState([]);
+    let [abiertoPun, setAbiertoPuntuacion] = useState(false);
+    let [mensajePun, setMensajePuntuacion] = useState("");
+    let [puntuacion, setPuntuacion] = useState("0");
+    let [abierto, setAbierto] = useState(false);
+    let [mensaje, setMensaje] = useState("");
+
+    const abrirModal=(mensaje)=>{
+      setAbierto(true);
+      setMensaje(mensaje);
+    }
+  
+      const abrirModalPuntuacion=()=>{
+        setAbiertoPuntuacion(true);
+      }
+    
     
     const recibirPedido = ()=>
     {
@@ -75,6 +90,43 @@ export default function AccionesViajesCliente() {
           console.log(e);
         })
       // redireccionar
+    }
+
+    const enviarPuntuacion = ()=>
+    {
+      if(puntuacion > 0 && puntuacion < 11)
+      {
+      let infoPuntuacion=
+      {
+        tipo: "cliente",
+        idViaje: viajeInfos[0].idViaje,
+        calificacion: puntuacion
+      }
+      const ViajeBody = Object.keys(infoPuntuacion).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(infoPuntuacion[key])).join('&');
+
+
+      fetch("http://localhost:8080/ApiPPS/calificar/", {
+        method: "POST",
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'},
+        body: ViajeBody,
+        })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (resp) {
+          console.log(resp);
+  
+          window.history.back();
+        })
+        .catch((e) => {
+          console.log(e);
+        })
+      }
+      else
+      {
+        setAbiertoPuntuacion(false);
+        abrirModal("La puntuacion debe ser entre 1 y 10");
+      }
     }
   
     const rows = [];
@@ -200,14 +252,36 @@ export default function AccionesViajesCliente() {
                   </Button>):null
                   ))}
                   {viajeInfos.map((viajeInfo) => (
-                    viajeInfo.estado == "Recibido" || viajeInfo.estado == "Calificado por cliente"?
-                  (<Button key={viajeInfo.idViaje} variant="contained" color="primary" className="botonAceptar" onClick={event=> console.log("llamar a puntuar")}>
+                    viajeInfo.estado == "Recibido" || viajeInfo.estado == "Calificado por Transportista"?
+                  (<Button key={viajeInfo.idViaje} variant="contained" color="primary" className="botonAceptar" onClick={event=> abrirModalPuntuacion()}>
                    {/* onClick={event => window.location.href = '/ClienteHome'}> */}
                       <label >Hacer encuesta</label>
                   </Button>):null
                   ))}
                   </div>
           </Row>
+
+          {abierto &&    
+           <div className="cartel" onClick={event =>  setAbierto(false)} >
+            <h2>{mensaje}</h2>
+            </div> 
+         }
+
+          {viajeInfos.map((viajeInfo) => (
+          abiertoPun&&
+           (<div className="puntuacion" key={viajeInfo.idViaje}>
+            <h4 >Transportista</h4> <input readOnly value={viajeInfo.infoPropuesta.infoTransp.email} align='right' type="text"></input><br/>
+            <h4>Puntuacion</h4> <input value={puntuacion} onChange = {(e) => setPuntuacion(e.target.value)} align='right' type="select"></input><br/>
+            <br></br>
+            <Button variant="contained" color="secondary"  onClick={event=> setAbiertoPuntuacion(false)}>
+                <label >Cancelar</label>
+            </Button>
+            <Button variant="contained" color="primary" onClick={event=> enviarPuntuacion()}>
+            <label >Enviar puntuacion</label>
+            </Button>
+            </div> 
+            )
+          ))}
       </Grid>
       </>)
 }

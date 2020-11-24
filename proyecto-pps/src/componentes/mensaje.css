@@ -13,3 +13,19 @@
     margin-top: -100px;
     /* margin-left: -100px; */
 }
+
+.puntuacion{
+    height: 40vh;
+    width: 30vw;
+    /* background-color: rgb(56, 24, 197); */
+    background-color: rgb(34, 103, 233);
+    color: white;
+    border-radius: 1em;
+    box-shadow: 5px 10px #0021dd;
+    position: absolute;
+    top:40%;
+    left: 35%;           
+    /* left: 50%;            */
+    margin-top: -100px;
+    /* margin-left: -100px; */
+}

@@ -10,7 +10,7 @@ function Home() {
             <Grid>
                 <br></br>
                 <Row>
-                    <Col xs={4} xl={4} md={4} className="Welcome"> Bienvenido a TransportApp!</Col>
+                    <Col xs={4} xl={4} md={4} className="Welcome"> Bienvenido a NombrePagina!</Col>
                     <Col xs={3} xl={3} md={3}>
                         <Button variant="contained" color="primary" className="botonTipo" onClick={event => window.location.href = '/Login'}>
                             <label className="contenidoBoton">Quiero Transportar!</label>
