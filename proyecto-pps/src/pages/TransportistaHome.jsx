@@ -262,7 +262,7 @@ fetch("http://localhost:8080/ApiPPS/transp/mail/", solicitud)
                 </TableHead>
                 <TableBody>
                   {listaViajes.map((row) => (
-                    row.estado == "Viaje Pactado" || row.estado == "Entregado" || row.estado == "Calificado por Cliente" ?
+                    row.estado == "Viaje Pactado" || row.estado == "Entregado" || row.estado == "Recibido" || row.estado == "Calificado por Cliente" ?
                       (<TableRow onClick={event => window.location.href = '/AccionesViajes/' + row.idPedido} key={row.idPedido}>
                         <TableCell component="th" scope="row">{row.DireccionOrigen.Ciudad}</TableCell>
                         <TableCell align="right">{row.DireccionLlegada.Ciudad}</TableCell>

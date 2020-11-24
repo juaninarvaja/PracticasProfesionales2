@@ -209,7 +209,7 @@ export default function ClienteHome() {
                             </TableHead>
                             <TableBody> 
                             {listaViajes.map((row) => (
-                              row.estado == "Viaje Pactado" || row.estado == "Entregado" || row.estado == "Calificado por Transportista" ?
+                              row.estado == "Viaje Pactado" || row.estado == "Entregado" || row.estado == "Recibido" || row.estado == "Calificado por Transportista" ?
                                 (<TableRow onClick={event => window.location.href = '/AccionesViajesCliente/'+row.idPedido} key={row.idPedido}>
                                 <TableCell component="th" scope="row">{row.DireccionOrigen.Ciudad}</TableCell>
                                 <TableCell align="right">{row.DireccionLlegada.Ciudad}</TableCell>
