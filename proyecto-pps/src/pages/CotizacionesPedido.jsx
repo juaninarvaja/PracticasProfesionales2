@@ -102,6 +102,7 @@ export default function CotizacionesPedido() {
           .catch((e) => {
             console.log(e);
           })  
+          window.history.back();
     }
 
     const classes = useStyles();

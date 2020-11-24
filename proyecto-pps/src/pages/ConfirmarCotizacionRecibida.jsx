@@ -127,7 +127,7 @@ export default function ConfirmarCotizacionRecibida() {
               <label className="labelOferta">Oferta  $ </label><input type="text" value={propuesta.Precio} readOnly></input><br/>   
                   <br/><br/>
 
-                  <Button variant="contained" color="secondary" className="botonCancelar" onClick={event => window.location.href = '/ClienteHome'}>
+                  <Button variant="contained" color="secondary" className="botonCancelar" onClick={event => window.history.back()}>
                       <label className="contenidoBotonCancelarAceptar">Cancelar</label>
                   </Button>
 

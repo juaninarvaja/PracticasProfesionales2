@@ -10,6 +10,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import MensajeError from '../componentes/mensajeError';
 import {useHistory} from 'react-router-dom';
 import {
   BrowserRouter as Router,
@@ -40,6 +41,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Login() {
+  let [abierto, setAbierto] = useState(false);
+  let [mensaje, setMensaje] = useState("");
+
+    const abrirModal=(mensaje)=>{
+      setAbierto(true);
+      setMensaje(mensaje);
+    }
     const classes = useStyles();
 
     const usuarios = [];
@@ -131,6 +139,11 @@ const logInTransp = (e) =>{
   {
     window.location.href='/TransportistaHome/' + email ;
   }
+  else{
+    //console.log("quien te conoce papá");
+    abrirModal("Informacion incorrecta, verifique si su mail y contraseña con correctos");
+    
+  }
 }
 
 const logInCliente = (e)=>
@@ -139,13 +152,24 @@ const logInCliente = (e)=>
   {
     window.location.href='/ClienteHome/' + email;
   }
+  else{
+    //console.log("quien te conoce papá");
+    abrirModal("Informacion incorrecta, verifique si su mail y contraseña con correctos");
+    
+  }
 }
+
 
 const logInAdmin = (e)=>
 {
   if(logear(email, pass, "Admin"))
   {
     window.location.href='/AdministradorHome';
+  }
+  else{
+    //console.log("quien te conoce papá");
+    abrirModal("Informacion incorrecta, verifique si su mail y contraseña con correctos");
+    
   }
 }
   
@@ -243,7 +267,16 @@ const logInAdmin = (e)=>
           </form>
 
           <label>No tenes cuenta, registrate <Link to="/Registro">aca</Link></label>
-        </div>
+          
+        </div> 
+          {abierto &&    
+           <div className="cartel" onClick={event =>  setAbierto(false)} >
+            <h2>{mensaje}</h2>
+            </div> 
+         }
+        
+  
+
         <Box mt={8}>
         </Box>
       </Container>);

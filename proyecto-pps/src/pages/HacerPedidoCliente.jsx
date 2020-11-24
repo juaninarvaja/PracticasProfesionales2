@@ -28,50 +28,67 @@ export default function HacerPedidoCliente()
     //let [distancia, setDistancia] = useState("");
     let [descripcion, setDescripcion] = useState("");
 
+    let [abierto, setAbierto] = useState(false);
+    let [mensaje, setMensaje] = useState("");
+  
+      const abrirModal=(mensaje)=>{
+        setAbierto(true);
+        setMensaje(mensaje);
+      }
 
     const subirPedido = (e)=>
     {
-
-        let datos=
-        {
-          idCliente: id,
-          calleOrigen: calleOrigen,
-          ciudadOrigen: ciudadOrigen,
-          departamentoOrigen: departamentoOrigen,
-          provinciaOrigen: provinciaOrigen,
-          codigoPostalOrigen: codigoPostalOrigen,
-          numeracionOrigen: numeracionOrigen,
-          infoOrigen: infoOrigen,
-          calleDestino: calleDestino,
-          ciudadDestino: ciudadDestino,
-          departamentoDestino: departamentoDestino,
-          provinciaDestino: provinciaDestino,
-          codigoPostalDestino: codigoPostalDestino,
-          numeracionDestino: numeracionDestino,
-          infoDestino: infoDestino,
-          distancia: 147,
-          descripcion: descripcion
+        if(!calleOrigen ||!ciudadOrigen || !departamentoOrigen || !provinciaOrigen || !codigoPostalOrigen || !numeracionOrigen 
+            || !infoOrigen || !calleDestino ||!ciudadDestino || !departamentoDestino || !provinciaDestino || !codigoPostalDestino || !numeracionDestino 
+            || !infoDestino || !descripcion  ){
+                abrirModal("Falta informacion para poder realizar el pedido, le solicitamos que complete todos los campos con asterisco para poder continuar con la realización de su pedido");
+            //console.log("mandame toda la info o no pasas");
         }
-
-    const formBody = Object.keys(datos).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(datos[key])).join('&');
-
-        
-    fetch("http://localhost:8080/ApiPPS/pedidos/", {
-      method: "POST",
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'},
-      body: formBody,
-      })
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (resp) {
-        console.log(resp);
-
-        //window.location.href = '/ClienteHome';
-      })
-      .catch((e) => {
-        console.log(e);
-      })
+        else{
+            console.log(typeof(calleOrigen));
+            let datos=
+            {
+              idCliente: id,
+              calleOrigen: calleOrigen,
+              ciudadOrigen: ciudadOrigen,
+              departamentoOrigen: departamentoOrigen,
+              provinciaOrigen: provinciaOrigen,
+              codigoPostalOrigen: codigoPostalOrigen,
+              numeracionOrigen: numeracionOrigen,
+              infoOrigen: infoOrigen,
+              calleDestino: calleDestino,
+              ciudadDestino: ciudadDestino,
+              departamentoDestino: departamentoDestino,
+              provinciaDestino: provinciaDestino,
+              codigoPostalDestino: codigoPostalDestino,
+              numeracionDestino: numeracionDestino,
+              infoDestino: infoDestino,
+              distancia: 147,
+              descripcion: descripcion
+            }
+    
+        const formBody = Object.keys(datos).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(datos[key])).join('&');
+            console.log(formBody);
+            
+        fetch("http://localhost:8080/ApiPPS/pedidos/", {
+          method: "POST",
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'},
+          body: formBody,
+          })
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (resp) {
+            console.log(resp);
+            window.history.back();
+            //window.location.href = '/ClienteHome';
+          })
+          .catch((e) => {
+            console.log(e);
+          })
+          
+        }
+       
     }
 
     return (
@@ -82,13 +99,13 @@ export default function HacerPedidoCliente()
                 <Col xs={5} xl={3} md={5}>
                     <div className="divOrigenDestino">
                         <h4>Origen del producto</h4>
-                        <label className="labelInputs">Provincia:</label>  <input value={provinciaOrigen} onChange = {(e) => setProvinciaOrigen(e.target.value)}  align='right' type="text"></input><br/>
-                    <label className="labelInputs">Municipio:</label><input value={departamentoOrigen} onChange = {(e) => setDepartamentoOrigen(e.target.value)} align='right' type="text"></input> <br/>
-                    <label className="labelInputs">Localidad: </label> <input value={ciudadOrigen} onChange = {(e) => setCiudadOrigen(e.target.value)}  type="text"></input><br/>
-                    <label className="labelInputs">CP: </label> <input align='right' value={codigoPostalOrigen} onChange = {(e) => setCodigoPostalOrigen(e.target.value)} type="number" style={{width: '5vw'}}></input><br/>
-                    <label className="labelInputs"> Calle:</label> <input value={calleOrigen} onChange = {(e) => setCalleOrigen(e.target.value)} type="text"></input><br/>
-                    <label className="labelInputs">Altura:</label> <input value={numeracionOrigen} onChange = {(e) => setNumeracionOrigen(e.target.value)} type="number"></input><br/>
-                    <label className="labelInputs">Info extra:</label><input value={infoOrigen} onChange = {(e) => setInfoOrigen(e.target.value)} type="text"></input> <br></br><br/>
+                        <label className="labelInputs">*Provincia:</label>  <input value={provinciaOrigen} onChange = {(e) => setProvinciaOrigen(e.target.value)}  align='right' type="text"></input><br/>
+                    <label className="labelInputs">*Municipio:</label><input value={departamentoOrigen} onChange = {(e) => setDepartamentoOrigen(e.target.value)} align='right' type="text"></input> <br/>
+                    <label className="labelInputs">*Localidad: </label> <input value={ciudadOrigen} onChange = {(e) => setCiudadOrigen(e.target.value)}  type="text"></input><br/>
+                    <label className="labelInputs">*CP: </label> <input align='right' value={codigoPostalOrigen} onChange = {(e) => setCodigoPostalOrigen(e.target.value)} type="number" style={{width: '5vw'}}></input><br/>
+                    <label className="labelInputs"> *Calle:</label> <input value={calleOrigen} onChange = {(e) => setCalleOrigen(e.target.value)} type="text"></input><br/>
+                    <label className="labelInputs">*Altura:</label> <input value={numeracionOrigen} onChange = {(e) => setNumeracionOrigen(e.target.value)} type="number"></input><br/>
+                    <label className="labelInputs">*Info extra:</label><input value={infoOrigen} onChange = {(e) => setInfoOrigen(e.target.value)} type="text"></input> <br></br><br/>
                     <label className="labelInputsCargaDescarga">El transportista debera
                      hacerse cargo de la carga del producto en su vehiculo?
                      <input className="CheckBox" type="checkbox"></input></label>
@@ -98,13 +115,13 @@ export default function HacerPedidoCliente()
                 <Col xs={5} xl={3} md={5}>
                     <div className="divOrigenDestino">
                     <h4>Destino del producto</h4>
-                    <label className="labelInputs">Provincia:</label>  <input value={provinciaDestino} onChange = {(e) => setProvinciaDestino(e.target.value)} align='right' type="text"></input><br/>
-                    <label className="labelInputs">Municipio:</label><input value={departamentoDestino} onChange = {(e) => setDepartamentoDestino(e.target.value)} align='right' type="text"></input> <br/>
-                    <label className="labelInputs">Localidad: </label> <input value={ciudadDestino} onChange = {(e) => setCiudadDestino(e.target.value)} type="text"></input><br/>
-                    <label className="labelInputs">CP: </label> <input value={codigoPostalDestino} onChange = {(e) => setCodigoPostalDestino(e.target.value)} align='right' type="number" style={{width: '10vw', marginRight:'0px'}}></input><br/>
-                    <label className="labelInputs"> Calle:</label> <input value={calleDestino} onChange = {(e) => setCalleDestino(e.target.value)} type="text"></input><br/>
-                    <label className="labelInputs">Altura:</label> <input value={numeracionDestino} onChange = {(e) => setNumeracionDestino(e.target.value)} type="number"></input><br/>
-                    <label className="labelInputs">Info extra:</label><input value={infoDestino} onChange = {(e) => setInfoDestino(e.target.value)} type="text"></input> <br/><br/>
+                    <label className="labelInputs">*Provincia:</label>  <input value={provinciaDestino} onChange = {(e) => setProvinciaDestino(e.target.value)} align='right' type="text"></input><br/>
+                    <label className="labelInputs">*Municipio:</label><input value={departamentoDestino} onChange = {(e) => setDepartamentoDestino(e.target.value)} align='right' type="text"></input> <br/>
+                    <label className="labelInputs">*Localidad: </label> <input value={ciudadDestino} onChange = {(e) => setCiudadDestino(e.target.value)} type="text"></input><br/>
+                    <label className="labelInputs">*CP: </label> <input value={codigoPostalDestino} onChange = {(e) => setCodigoPostalDestino(e.target.value)} align='right' type="number" style={{width: '10vw', marginRight:'0px'}}></input><br/>
+                    <label className="labelInputs"> *Calle:</label> <input value={calleDestino} onChange = {(e) => setCalleDestino(e.target.value)} type="text"></input><br/>
+                    <label className="labelInputs">*Altura:</label> <input value={numeracionDestino} onChange = {(e) => setNumeracionDestino(e.target.value)} type="number"></input><br/>
+                    <label className="labelInputs">*Info extra:</label><input value={infoDestino} onChange = {(e) => setInfoDestino(e.target.value)} type="text"></input> <br/><br/>
                     <label className="labelInputsCargaDescarga">El transportista debera
                      hacerse cargo de la descarga del producto en su vehiculo?
                      <input className="CheckBox" type="checkbox"></input></label>
@@ -118,7 +135,7 @@ export default function HacerPedidoCliente()
                     <label className="labelInputs">Tipo de producto</label>  <input align='right' type="text"></input><br/>
                     <label className="labelInputs">Transporte apto p/llevar</label><input align='right' type="text"></input><br/>
                     <label className="labelInputs">Medidas</label>  <input align='right' type="select"></input><br/>
-                    <label className="labelInputs">Descripcion del pedido</label>  
+                    <label className="labelInputs">*Descripcion del pedido</label>  
                     <br/><input value={descripcion} onChange = {(e) => setDescripcion(e.target.value)} align='right' type="select"  style={{height:'10vh', width:'80%'}}>
                         </input><br/><br/>
                         <Button variant="contained" color="primary" className="botonAceptar" onClick={subirPedido}>
@@ -130,8 +147,16 @@ export default function HacerPedidoCliente()
                     </div>
                 </Col>
                 </Row>
-              
+         
+
+        
             </Grid>
+            {abierto &&    
+           <div className="cartel" onClick={event =>  setAbierto(false)} >
+            <h2>{mensaje}</h2>
+            </div> 
+         }
+            
         </div>
     );
 }

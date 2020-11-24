@@ -41,6 +41,7 @@ export default function VentanaOferta()
       .catch((e) => {
         console.log(e);
       })
+      window.history.back();
     }
 
     
@@ -57,7 +58,7 @@ export default function VentanaOferta()
                     <label className="labelOferta">Oferta  $ </label><input value={precio} onChange = {(e) => setPrecio(e.target.value)} type="text"></input><br/>   
                         <br/><br/>
 
-                        <Button variant="contained" color="secondary" className="botonCancelar" onClick={event => window.location.href = '/TransportistaHome'}>
+                        <Button variant="contained" color="secondary" className="botonCancelar" onClick={event => window.history.back()}>
                             <label className="contenidoBotonCancelarAceptar">Cancelar</label>
                         </Button>
 
