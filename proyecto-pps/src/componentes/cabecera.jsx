@@ -12,7 +12,7 @@ function Cabecera() {
               <img className= "imagenLogo" src="/imagenes/camion.png"></img>
             </div>
           </Col>
-          <Col xs={5} className="titulo"> NombrePagina</Col>
+          <Col xs={5} className="titulo"> TransportApp</Col>
           <Col xs={5} className="descripcion">Te lo llevamos lo que sea a donde sea</Col>
         </Row>
       </Grid>

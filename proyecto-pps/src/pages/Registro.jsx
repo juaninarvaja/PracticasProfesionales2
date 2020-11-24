@@ -47,6 +47,15 @@ export default function Registro() {
     let [patente, setPatente] = useState("");
     let [check, setCheck] = useState("transp");
     
+    let [abierto, setAbierto] = useState(false);
+    let [mensaje, setMensaje] = useState("");
+  
+      const abrirModal=(mensaje)=>{
+        setAbierto(true);
+        setMensaje(mensaje);
+      }
+      //Hasta aca es para el modal
+
     useEffect(() => {
     const solicitudNoticias = {
     method: "GET"
@@ -120,25 +129,45 @@ export default function Registro() {
             papeles: patente
           }
         }
+        if(!pass || !email){
+          abrirModal("Completa todos los datos");
 
-        const formBody = Object.keys(usuario).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(usuario[key])).join('&');
+        }
+        else if(pass.length < 4 || pass.length > 16) {
+          abrirModal("La contraseña debe tener al menos 4 caracteres y hasta 16 ");
+        }
+        else if(usuario.tipoUsuario == "transportista" && !patente){
+          abrirModal("La patente es obligatoria");
+        }
+        else if(usuario.tipoUsuario == "transportista" && patente.length < 6) {
+          abrirModal("La patente debe tener al menos 6 caracteres");
+        }
 
-        fetch(UrlApi,{
-          method: "POST",
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'},
-          body: formBody,
-          })
-          .then(response=> {
-            
-            return response.json();
-          })
-          .then(function (resp) {
-            window.location.href='/Home';
-            console.log(resp);
-          })
-          .catch((e) => {
-            console.log(e);
-          })
+        else{
+          const formBody = Object.keys(usuario).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(usuario[key])).join('&');
+
+          fetch(UrlApi,{
+            method: "POST",
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'},
+            body: formBody,
+            })
+            .then(response=> {
+              //console.log(response.text());
+              return response.json();
+            })
+            .then(function (resp) {
+              window.location.href='/Home';
+              console.log(resp);
+            })
+            .catch((e) => {
+              abrirModal("rompe");
+              console.log(e);
+            })
+        }
+
+      }
+      else {
+        abrirModal("Ese mail ya existe");
       }
     }
 
@@ -236,5 +265,10 @@ export default function Registro() {
         </div>
         <Box mt={8}>
         </Box>
+        {abierto &&    
+           <div className="cartel" onClick={event =>  setAbierto(false)} >
+            <h2>{mensaje}</h2>
+            </div> 
+         }
       </Container>);
 }

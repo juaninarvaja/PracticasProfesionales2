@@ -33,6 +33,7 @@ export default function ClienteHome() {
       );
       let [listaPedidos, setListaPedidos] = useState([]);
       let [listaViajes, setListaViajes] = useState([]);
+      let [calificacion, setCalificacion] = useState(0);
 
       
       const handleOnClick = (e) => {
@@ -64,6 +65,7 @@ export default function ClienteHome() {
 
         console.log("resp");
         console.log(resp);
+        setCalificacion(resp.calificacion);
         setIdCliente(resp.id);
 
         Object.entries(resp.pedidosCliente).map(pedido=>
@@ -141,7 +143,10 @@ export default function ClienteHome() {
             <Grid>
                 <br></br>
                 <Row>
-    <Col xs={4} > Bienvenido {email}!</Col>
+    <Col xs={4} > Bienvenido {email}!
+    <h2 className="title"> tu calificacion {calificacion}</h2>
+    
+    </Col>
                     <Col xs={4}>
                         {/* <Button variant="contained" color="primary" className="botonTipo" onClick={event =>  window.location.href='/'}>
                             <label className="contenidoBoton">Volver al home</label>
