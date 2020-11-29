@@ -167,19 +167,31 @@ export default function AdministradorHome() {
                             <TableRow className="cabeceraTable">
                                 <TableCell>Email</TableCell>
                                 <TableCell align="right">Patente automovil</TableCell>
+                                <TableCell align="right">Estado</TableCell>
                                 <TableCell align="right">Acciones</TableCell>
                             </TableRow>
                             </TableHead>
                             <TableBody>
                             {listaTransportistas.map((row) => (
-                                <TableRow key={row.email}>
+                              row.habilitado=="0" ?
+                                (<TableRow key={row.email}>
                                 <TableCell component="th" scope="row">
                                     {row.email}
                                 </TableCell>
                                 <TableCell align="right">{row.papeles}</TableCell>
+                                <TableCell align="right">{"Usuario nuevo"}</TableCell>
                                 <TableCell align="right"><Button onClick={event=>aceptarTransp(row)} variant="contained" color="primary">Aceptar</Button>
                                 <Button variant="contained" onClick={event=>eliminarTransp(row)} color="secondary">Cancelar</Button></TableCell>
-                                </TableRow>
+                                </TableRow>):
+                                (<TableRow key={row.email}>
+                                <TableCell component="th" scope="row">
+                                    {row.email}
+                                </TableCell>
+                                <TableCell align="right">{row.papeles}</TableCell>
+                                <TableCell align="right">{"Usuario suspendido"}</TableCell>
+                                <TableCell align="right"><Button onClick={event=>aceptarTransp(row)} variant="contained" color="primary">Aceptar</Button>
+                                <Button variant="contained" onClick={event=>eliminarTransp(row)} color="secondary">Cancelar</Button></TableCell>
+                                </TableRow>)
                             ))}
                             </TableBody>
                         </Table>

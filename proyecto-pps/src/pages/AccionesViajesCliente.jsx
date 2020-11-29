@@ -84,7 +84,7 @@ export default function AccionesViajesCliente() {
         .then(function (resp) {
           console.log(resp);
   
-          //window.location.href = '/ClienteHome';
+          window.history.back();
         })
         .catch((e) => {
           console.log(e);

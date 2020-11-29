@@ -41,6 +41,7 @@ export default function TransportistaHome() {
   let [strikes, setStrikes] = useState(0);
 
 
+
   useEffect(() => {
 
     let mail =
@@ -60,6 +61,7 @@ export default function TransportistaHome() {
         return response.json();
       })
       .then(function (resp) {
+        console.log(resp)
         Object.entries(resp).map(pedido => {
           pedido.splice(1, 1).map(ped => {
             rowsViaj.push(ped);
@@ -138,10 +140,16 @@ export default function TransportistaHome() {
         return response.json();
       })
       .then(function (resp) {
-
+        // console.log(email);
+        // console.log(resp[0].habilitado);
         if (resp[0]?.habilitado == "1") {
+         // console.log("seteo q esta hablitado");
           habilita(true);
         }
+
+        //console.log(habilitado);
+        // setIdTransp(resp.idTransportista);
+
       })
       .catch((e) => {
         console.log(e);
@@ -150,36 +158,45 @@ export default function TransportistaHome() {
         // console.log(listaPedidos);
       });
 
-//______________
-fetch("http://localhost:8080/ApiPPS/transp/mail/", solicitud)
-.then(function (response) {
-  return response.json();
-})
-.then(function (resp) {
-  setCalificacion(resp.calificacion);
-})
-.catch((e) => {
-  console.log(e);
-})
-.finally(() => {
-  // console.log(listaPedidos);
-});
-//______________
-fetch("http://localhost:8080/ApiPPS/strikes/cantidadPorMail/", solicitud)
-.then(function (response) {
-  return response.json();
-})
-.then(function (resp) {
-  setStrikes(resp);
-})
-.catch((e) => {
-  console.log(e);
-})
-.finally(() => {
-  // console.log(listaPedidos);
-});
-      
-      
+      fetch("http://localhost:8080/ApiPPS/transp/mail/", solicitud)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (resp) {
+        // console.log(email);
+        // console.log(resp[0].habilitado);
+        //console.log(resp);
+        setCalificacion(resp.calificacion);
+        // if (resp[0]?.habilitado == "1") {
+        //  // console.log("seteo q esta hablitado");
+        //   habilita(true);
+        // }
+
+        //console.log(habilitado);
+        // setIdTransp(resp.idTransportista);
+
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+      .finally(() => {
+        // console.log(listaPedidos);
+      }); 
+
+      fetch("http://localhost:8080/ApiPPS/strikes/cantidadPorMail/", solicitud)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (resp) {
+        setStrikes(resp);
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+      .finally(() => {
+        // console.log(listaPedidos);
+      });
+
 
   }, []
   );
@@ -198,15 +215,14 @@ fetch("http://localhost:8080/ApiPPS/strikes/cantidadPorMail/", solicitud)
             <Col xs={5} xl={4} md={4}  > Bienvenido {email} 
             <br>
             </br>
-            <h2 className="title"> Calificacion {calificacion}</h2>
-    
-           
+            <h2 className="title"> tu calificacion {calificacion}</h2>
       {/* //tu promedio en el sitio es: <h3> {calificacion}</h3> */}
             </Col>
+            
 
 
-            <Col xs={2} xl={4} md={4}  ><br></br>
-            <h4 className = "strikes" > Strikes {strikes}</h4>
+            <Col xs={2} xl={4} md={4}  >
+              <h4 className = "strikes" > Strikes {strikes}</h4>
             <h5>Recuerda que a los 3 strikes se te bloqueara la cuenta</h5>
             </Col>
             <Col xs={5} xl={4} md={4} >
@@ -266,7 +282,7 @@ fetch("http://localhost:8080/ApiPPS/strikes/cantidadPorMail/", solicitud)
                 </TableHead>
                 <TableBody>
                   {listaViajes.map((row) => (
-                    row.estado == "Viaje Pactado" || row.estado == "Entregado" || row.estado == "Recibido" || row.estado == "Calificado por Cliente" ?
+                    row.estado == "Viaje Pactado" || row.estado == "Entregado" ||  row.estado == "Recibido" || row.estado == "Calificado por Cliente" ?
                       (<TableRow onClick={event => window.location.href = '/AccionesViajes/' + row.idPedido} key={row.idPedido}>
                         <TableCell component="th" scope="row">{row.DireccionOrigen.Ciudad}</TableCell>
                         <TableCell align="right">{row.DireccionLlegada.Ciudad}</TableCell>
@@ -294,7 +310,7 @@ fetch("http://localhost:8080/ApiPPS/strikes/cantidadPorMail/", solicitud)
 
             Pronto podras formar parte de la flota de transporte mas innovadora.
                      <br /><br />
-                     Solo debes esperar que nuestro equipo se ocuope de procesar la informacion sobre su postulación.
+                     Solo debes esperar que nuestro equipo se ocupe de procesar la informacion sobre su postulación.
                      <br /><br />
                      Es cuestion de tiempo para poder empezar a generar ingresos solo con tu vehiculo!
                      </div>

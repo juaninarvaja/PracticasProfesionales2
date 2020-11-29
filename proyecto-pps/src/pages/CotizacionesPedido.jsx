@@ -135,7 +135,6 @@ export default function CotizacionesPedido() {
                                 <TableCell align="right">Descripcion</TableCell>
                                 <TableCell align="right">Precio</TableCell>
                                 <TableCell align="right">Puntuacion</TableCell>
-                                <TableCell align="right">Foto</TableCell>
                             </TableRow>
                             </TableHead>
                             <TableBody>
@@ -147,7 +146,6 @@ export default function CotizacionesPedido() {
                                 <TableCell align="right">{row.informacion}</TableCell>
                                 <TableCell align="right">${row.Precio}</TableCell>
                                 <TableCell align="right">{row.infoTransp.calificacion}</TableCell>
-                                <TableCell align="right">{row.infoTransp.papeles}</TableCell>
                                 </TableRow>
                             ))}
                             </TableBody>

@@ -43,8 +43,8 @@ export default function ConfirmarCotizacionRecibida() {
         })
         .then(function (resp) {
           console.log(resp);
-          window.history.back();
-          //window.location.href = '/ClienteHome';
+  
+          window.history.go(-2);
         })
         .catch((e) => {
           console.log(e);

@@ -53,7 +53,7 @@ export default function VentanaOferta()
                 <Col xs={10} xl={6} md={10} className="centrarCol">
                     <div className="divContenedorDescripcionProducto">
                     <label className="labelInputs">Propuesta</label>  
-                    <br/><input value={informacion} onChange = {(e) => setInfo(e.target.value)} align='right' type="select"  style={{height:'10vh', width:'30vw'}}></input>
+                    <br/><input value={informacion} onChange = {(e) => setInfo(e.target.value)} align='right' type="select"  style={{height:'10vh', width:'40vw'}}></input>
                     <br/><br/>
                     <label className="labelOferta">Oferta  $ </label><input value={precio} onChange = {(e) => setPrecio(e.target.value)} type="text"></input><br/>   
                         <br/><br/>

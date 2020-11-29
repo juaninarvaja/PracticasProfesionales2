@@ -170,7 +170,6 @@ export default function ClienteHome() {
                                 <TableCell>Origen</TableCell>
                                 <TableCell align="right">Destino</TableCell>
                                 <TableCell align="right">Descripcion</TableCell>
-                                <TableCell align="right">Foto</TableCell>
                             </TableRow>
                             </TableHead>
                             <TableBody>
@@ -181,7 +180,6 @@ export default function ClienteHome() {
                                 <TableCell component="th" scope="row">{row.DireccionOrigenInfo.Ciudad}</TableCell>
                                 <TableCell align="right">{row.DireccionLlegadaInfo.Ciudad}</TableCell>
                                 <TableCell align="right">{row.descripcion}</TableCell>
-                                <TableCell align="right">{row.foto}</TableCell>
                                 </TableRow>) : null
                               
                             ))}
