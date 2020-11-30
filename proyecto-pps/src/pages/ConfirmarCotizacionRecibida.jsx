@@ -128,7 +128,7 @@ export default function ConfirmarCotizacionRecibida() {
                   <br/><br/>
 
                   <Button variant="contained" color="secondary" className="botonCancelar" onClick={event => window.history.back()}>
-                      <label className="contenidoBotonCancelarAceptar">Cancelar</label>
+                      <label className="contenidoBotonCancelarAceptar">Atras</label>
                   </Button>
 
                   <Button variant="contained" color="primary" className="botonAceptar" onClick={event=> aceptarOferta(propuesta)}>

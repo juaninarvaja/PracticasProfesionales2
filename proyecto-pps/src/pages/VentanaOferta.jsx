@@ -12,8 +12,21 @@ export default function VentanaOferta()
     let [informacion, setInfo] = useState("");
     let [precio, setPrecio] = useState("");
 
+    let [abierto, setAbierto] = useState(false);
+    let [mensaje, setMensaje] = useState("");
+  
+      const abrirModal=(mensaje)=>{
+        setAbierto(true);
+        setMensaje(mensaje);
+      }
     const subirPropuesta = (e)=>
     {
+      if(precio == "" || informacion == ""){
+        abrirModal("completa los dos campos");
+      }
+      else{
+
+      
         let datos=
         {
           idPedido: idPedido,
@@ -35,13 +48,14 @@ export default function VentanaOferta()
       })
       .then(function (resp) {
         console.log(resp);
-
+        window.history.back();
         //window.location.href = '/ClienteHome';
       })
       .catch((e) => {
         console.log(e);
       })
-      window.history.back();
+    }
+     
     }
 
     
@@ -51,7 +65,7 @@ export default function VentanaOferta()
             <Grid>
                 <Row>
                 <Col xs={10} xl={6} md={10} className="centrarCol">
-                    <div className="divContenedorDescripcionProducto">
+                    <div className="divContenedorDescripcionPropuesta">
                     <label className="labelInputs">Propuesta</label>  
                     <br/><input value={informacion} onChange = {(e) => setInfo(e.target.value)} align='right' type="select"  style={{height:'10vh', width:'40vw'}}></input>
                     <br/><br/>
@@ -70,6 +84,10 @@ export default function VentanaOferta()
                 </Col>
                 </Row>
             </Grid>
+            {abierto &&    
+           <div className="cartel" onClick={event =>  setAbierto(false)} >
+            <h2>{mensaje}</h2>
+            </div> }
         </div>
     );
 }

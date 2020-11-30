@@ -198,41 +198,41 @@ export default function AccionesViajesCliente() {
           <Row>
           <Col xs={5} xl={3} md={5} className="centrarCol">
               {viajeInfos.map((viajeInfo) => (
-              <div key={viajeInfo.idViaje} className="divOrigenDestino">
+              <div key={viajeInfo.idViaje} className="divOrigenDestinoAccion">
                     <h4>Origen del producto</h4>
-                    <label className="labelInputs">Provincia:</label>  <input readOnly value={viajeInfo.DireccionOrigen.Provincia} align='right' type="text"></input><br/>
-                    <label className="labelInputs">Municipio:</label><input readOnly value={viajeInfo.DireccionOrigen.Departamento} align='right' type="text"></input> <br/>
-                    <label className="labelInputs">Localidad: </label> <input readOnly value={viajeInfo.DireccionOrigen.Ciudad} type="text"></input><br/>
-                    <label className="labelInputs">CP: </label> <input readOnly align='right' value={viajeInfo.DireccionOrigen.CP} type="number" style={{width: '5vw'}}></input><br/>
-                    <label className="labelInputs"> Calle:</label> <input readOnly value={viajeInfo.DireccionOrigen.Calle} type="text"></input><br/>
-                    <label className="labelInputs">Altura:</label> <input readOnly value={viajeInfo.DireccionOrigen.Numeracion} type="number"></input><br/>
-                    <label className="labelInputs">Info extra:</label><input readOnly value={viajeInfo.DireccionOrigen.InfoExtra} type="text"></input> <br></br><br/>
+                    <label className="labelInputs">Provincia:</label> <br></br> <input readOnly value={viajeInfo.DireccionOrigen.Provincia} align='right' type="text"></input><br/>
+                    <label className="labelInputs">Municipio:</label> <br></br> <input readOnly value={viajeInfo.DireccionOrigen.Departamento} align='right' type="text"></input> <br/>
+                    <label className="labelInputs">Localidad: </label>  <br></br> <input readOnly value={viajeInfo.DireccionOrigen.Ciudad} type="text"></input><br/>
+                    <label className="labelInputs">CP: </label>  <br></br> <input readOnly align='right' value={viajeInfo.DireccionOrigen.CP} type="number" style={{width: '5vw'}}></input><br/>
+                    <label className="labelInputs"> Calle:</label>  <br></br> <input readOnly value={viajeInfo.DireccionOrigen.Calle} type="text"></input><br/>
+                    <label className="labelInputs">Altura:</label>  <br></br> <input readOnly value={viajeInfo.DireccionOrigen.Numeracion} type="number"></input><br/>
+                    <label className="labelInputs">Info extra:</label> <br></br> <input readOnly value={viajeInfo.DireccionOrigen.InfoExtra} type="text"></input> <br></br><br/>
                     </div>
                     ))}
                 </Col>
 
                 <Col xs={5} xl={3} md={5}>
                 {viajeInfos.map((viajeInfo) => (
-                    <div key={viajeInfo.idViaje} className="divOrigenDestino">
+                    <div key={viajeInfo.idViaje} className="divOrigenDestinoAccion">
                     <h4>Destino del producto</h4>
-                    <label className="labelInputs">Provincia:</label>  <input readOnly value={viajeInfo.DireccionLlegada.Provincia} align='right' type="text"></input><br/>
-                    <label className="labelInputs">Municipio:</label><input readOnly value={viajeInfo.DireccionLlegada.Departamento} align='right' type="text"></input> <br/>
-                    <label className="labelInputs">Localidad: </label> <input readOnly value={viajeInfo.DireccionLlegada.Ciudad} type="text"></input><br/>
-                    <label className="labelInputs">CP: </label> <input readOnly value={viajeInfo.DireccionLlegada.CP} align='right' type="number" style={{width: '10vw', marginRight:'0px'}}></input><br/>
-                    <label className="labelInputs"> Calle:</label> <input readOnly value={viajeInfo.DireccionLlegada.Calle} type="text"></input><br/>
-                    <label className="labelInputs">Altura:</label> <input readOnly value={viajeInfo.DireccionLlegada.Numeracion} type="number"></input><br/>
-                    <label className="labelInputs">Info extra:</label><input readOnly value={viajeInfo.DireccionLlegada.InfoExtra} type="text"></input> <br/><br/>
+                    <label className="labelInputs">Provincia:</label>  <br></br>  <input readOnly value={viajeInfo.DireccionLlegada.Provincia} align='right' type="text"></input><br/>
+                    <label className="labelInputs">Municipio:</label> <br></br> <input readOnly value={viajeInfo.DireccionLlegada.Departamento} align='right' type="text"></input> <br/>
+                    <label className="labelInputs">Localidad: </label> <br></br>  <input readOnly value={viajeInfo.DireccionLlegada.Ciudad} type="text"></input><br/>
+                    <label className="labelInputs">CP: </label> <br></br>  <input readOnly value={viajeInfo.DireccionLlegada.CP} align='right' type="number" style={{width: '10vw', marginRight:'0px'}}></input><br/>
+                    <label className="labelInputs"> Calle:</label>  <br></br> <input readOnly value={viajeInfo.DireccionLlegada.Calle} type="text"></input><br/>
+                    <label className="labelInputs">Altura:</label> <br></br>  <input readOnly value={viajeInfo.DireccionLlegada.Numeracion} type="number"></input><br/>
+                    <label className="labelInputs">Info extra:</label> <br></br> <input readOnly value={viajeInfo.DireccionLlegada.InfoExtra} type="text"></input> <br/><br/>
                     </div>
                     ))}
                 </Col>
 
                 <Col xs={10} xl={6} md={10}>
                 {viajeInfos.map((viajeInfo) => (
-                    <div key={viajeInfo.idViaje} className="divContenedorDescripcionProducto">
+                    <div key={viajeInfo.idViaje} className="divContenedorDescripcionProductoAccion">
                     <h4>Producto/s a transportar</h4>
-                    <label className="labelInputs">Transportista</label>  <input readOnly value={viajeInfo.infoPropuesta.infoTransp.email} align='right' type="text"></input><br/>
-                    <label className="labelInputs">Precio</label><input readOnly value={viajeInfo.infoPropuesta.Precio} align='right' type="text"></input><br/>
-                    <label className="labelInputs">Puntuacion</label>  <input value={viajeInfo.infoPropuesta.infoTransp.calificacion} readOnly align='right' type="select"></input><br/>
+                    <label className="labelInputs">Transportista</label>   <br></br> <input readOnly value={viajeInfo.infoPropuesta.infoTransp.email} align='right' type="text"></input><br/>
+                    <label className="labelInputs">Precio</label> <br></br> <input readOnly value={viajeInfo.infoPropuesta.Precio} align='right' type="text"></input><br/>
+                    <label className="labelInputs">Puntuacion</label>   <br></br> <input value={viajeInfo.infoPropuesta.infoTransp.calificacion} readOnly align='right' type="select"></input><br/>
                     <label className="labelInputs">Descripcion del pedido</label>  
                     <br/><input readOnly value={viajeInfo.infoPedido.descripcion} align='right' type="select"  style={{height:'10vh', width:'80%'}}>
                         </input><br/><br/>
@@ -242,7 +242,7 @@ export default function AccionesViajesCliente() {
                 
                     <div className="centrarCol">
                   <Button variant="contained" color="secondary" className="botonCancelar" onClick={event => window.history.back()}>
-                      <label className="contenidoBotonCancelarAceptar">Cancelar</label>
+                      <label className="contenidoBotonCancelarAceptar">Atras</label>
                   </Button>
                   {viajeInfos.map((viajeInfo) => (
                     viajeInfo.estado == "Entregado"?
